@@ -26,6 +26,17 @@ void draw_rect(float A_0, float A_1, float A_2, float A_3, int A_4, int A_5, int
 	GRAPHICS::DRAW_RECT((A_0 + (A_2 * 0.5f)), (A_1 + (A_3 * 0.5f)), A_2, A_3, A_4, A_5, A_6, A_7);
 }
 
+char *convertToMulti(wchar_t* wszTestNew) {
+	int nwszTestNewLen = lstrlenW(wszTestNew);
+	int nwszTestNewSize = sizeof(wszTestNew);
+	int nChar = WideCharToMultiByte(CP_UTF8, 0, wszTestNew, -1, NULL, 0, NULL, NULL);
+	nChar = nChar * sizeof(char);
+	char* szResult = new char[nChar];
+	ZeroMemory(szResult, nChar);
+	int i = WideCharToMultiByte(CP_UTF8, 0, wszTestNew, -1, szResult, nChar, NULL, NULL);
+	return szResult;
+}
+
 void draw_menu_line(std::string caption, float lineWidth, float lineHeight, float lineTop, float lineLeft, float textLeft, bool active, bool title, bool rescaleText = true)
 {
 	// default values
@@ -1220,7 +1231,7 @@ LPCSTR vehicleModels[vehicleLineCount][vehicleItemCount] = {
 LPCSTR vehicleModelsName[vehicleLineCount][vehicleItemCount] = {
 	{ "BANSHEE", "BALLER", "BUCCANEER", "BUFFALO2", "CAVALCADE2", "COQUETTE", "GRESLEY", "DUNE2", "HOTKNIFE", "EXEMPLAR" },//轿车
 	{ "STRETCH", "FQ2", "MESA3", "POLICE2", "SANDKING2", "SUPERD", "DUBSTA3", "MONSTER", "BUFFALO3", "JESTER2" },
-	{ "BUS", "COACH", "AMBULANCE", "BARRACKS", "DUMP", "FIRETRUK", "FLATBED", "HAULER", "JOURNEY", "TOWTRUCK" },//卡车
+	{ convertToMulti(L"公交车"), "COACH", "AMBULANCE", "BARRACKS", "DUMP", "FIRETRUK", "FLATBED", "HAULER", "JOURNEY", "TOWTRUCK" },//卡车
 	{ "RHINO", "AIRTUG", "BFINJECTION", "BLAZER3", "BULLDOZER", "CUTTER", "TRACTOR", "TRACTOR2", "BOATTRAILER", "ARMYTANKER" },//其他车
 	{ "BUZZARD2", "ANNIHILATOR", "CARGOBOB3", "SKYLIFT", "JET", "LUXOR", "LAZER", "HYDRA", "LAZER", "BLIMP" },//飞机
 	{ "SANCHEZ2", "SCORCHER", "DOUBLE", "SUNTRAP", "SQUALO", "DINGHY2", "JETMAX", "SEASHARK2", "TRAILERS3", "" },//bike 船
