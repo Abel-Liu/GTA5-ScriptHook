@@ -107,12 +107,12 @@ bool trainer_switch_pressed()
 
 void get_button_state(bool *a, bool *b, bool *up, bool *down, bool *l, bool *r)
 {
-	if (a) *a = IsKeyDown(VK_NUMPAD5);
+	if (a) *a = IsKeyDown(VK_RETURN) || IsKeyDown(VK_NUMPAD5);
 	if (b) *b = IsKeyDown(VK_NUMPAD0) || trainer_switch_pressed() || IsKeyDown(VK_BACK);
-	if (up) *up = IsKeyDown(VK_NUMPAD8);
-	if (down) *down = IsKeyDown(VK_NUMPAD2);
-	if (r) *r = IsKeyDown(VK_NUMPAD6);
-	if (l) *l = IsKeyDown(VK_NUMPAD4);
+	if (up) *up = IsKeyDown(VK_NUMPAD8) || IsKeyDown(0x49);//I
+	if (down) *down = IsKeyDown(VK_NUMPAD2) || IsKeyDown(0x4B);//K
+	if (r) *r = IsKeyDown(VK_NUMPAD6) || IsKeyDown(0x4C);//L
+	if (l) *l = IsKeyDown(VK_NUMPAD4) || IsKeyDown(0x4A);//J
 }
 
 void menu_beep()
@@ -1204,55 +1204,39 @@ void process_weapon_menu()
 	}
 }
 
-LPCSTR vehicleModels[37][10] = {
-	{"NINEF", "NINEF2", "BLISTA", "ASEA", "ASEA2", "BOATTRAILER", "BUS", "ARMYTANKER", "ARMYTRAILER", "ARMYTRAILER2"},
-	{"SUNTRAP", "COACH", "AIRBUS", "ASTEROPE", "AIRTUG", "AMBULANCE", "BARRACKS", "BARRACKS2", "BALLER", "BALLER2"},
-	{"BJXL", "BANSHEE", "BENSON", "BFINJECTION", "BIFF", "BLAZER", "BLAZER2", "BLAZER3", "BISON", "BISON2"},
-	{"BISON3", "BOXVILLE", "BOXVILLE2", "BOXVILLE3", "BOBCATXL", "BODHI2", "BUCCANEER", "BUFFALO", "BUFFALO2", "BULLDOZER"},
-	{"BULLET", "BLIMP", "BURRITO", "BURRITO2", "BURRITO3", "BURRITO4", "BURRITO5", "CAVALCADE", "CAVALCADE2", "POLICET"},
-	{"GBURRITO", "CABLECAR", "CADDY", "CADDY2", "CAMPER", "CARBONIZZARE", "CHEETAH", "COMET2", "COGCABRIO", "COQUETTE"},
-	{"CUTTER", "GRESLEY", "DILETTANTE", "DILETTANTE2", "DUNE", "DUNE2", "HOTKNIFE", "DLOADER", "DUBSTA", "DUBSTA2"},
-	{"DUMP", "RUBBLE", "DOCKTUG", "DOMINATOR", "EMPEROR", "EMPEROR2", "EMPEROR3", "ENTITYXF", "EXEMPLAR", "ELEGY2"},
-	{"F620", "FBI", "FBI2", "FELON", "FELON2", "FELTZER2", "FIRETRUK", "FLATBED", "FORKLIFT", "FQ2"},
-	{"FUSILADE", "FUGITIVE", "FUTO", "GRANGER", "GAUNTLET", "HABANERO", "HAULER", "HANDLER", "INFERNUS", "INGOT"},
-	{"INTRUDER", "ISSI2", "JACKAL", "JOURNEY", "JB700", "KHAMELION", "LANDSTALKER", "LGUARD", "MANANA", "MESA"},
-	{"MESA2", "MESA3", "CRUSADER", "MINIVAN", "MIXER", "MIXER2", "MONROE", "MOWER", "MULE", "MULE2"},
-	{"ORACLE", "ORACLE2", "PACKER", "PATRIOT", "PBUS", "PENUMBRA", "PEYOTE", "PHANTOM", "PHOENIX", "PICADOR"},
-	{"POUNDER", "POLICE", "POLICE4", "POLICE2", "POLICE3", "POLICEOLD1", "POLICEOLD2", "PONY", "PONY2", "PRAIRIE"},
-	{"PRANGER", "PREMIER", "PRIMO", "PROPTRAILER", "RANCHERXL", "RANCHERXL2", "RAPIDGT", "RAPIDGT2", "RADI", "RATLOADER"},
-	{"REBEL", "REGINA", "REBEL2", "RENTALBUS", "RUINER", "RUMPO", "RUMPO2", "RHINO", "RIOT", "RIPLEY"},
-	{"ROCOTO", "ROMERO", "SABREGT", "SADLER", "SADLER2", "SANDKING", "SANDKING2", "SCHAFTER2", "SCHWARZER", "SCRAP"},
-	{"SEMINOLE", "SENTINEL", "SENTINEL2", "ZION", "ZION2", "SERRANO", "SHERIFF", "SHERIFF2", "SPEEDO", "SPEEDO2"},
-	{"STANIER", "STINGER", "STINGERGT", "STOCKADE", "STOCKADE3", "STRATUM", "SULTAN", "SUPERD", "SURANO", "SURFER"},
-	{"SURFER2", "SURGE", "TACO", "TAILGATER", "TAXI", "TRASH", "TRACTOR", "TRACTOR2", "TRACTOR3", "GRAINTRAILER"},
-	{"BALETRAILER", "TIPTRUCK", "TIPTRUCK2", "TORNADO", "TORNADO2", "TORNADO3", "TORNADO4", "TOURBUS", "TOWTRUCK", "TOWTRUCK2"},
-	{"UTILLITRUCK", "UTILLITRUCK2", "UTILLITRUCK3", "VOODOO2", "WASHINGTON", "STRETCH", "YOUGA", "ZTYPE", "SANCHEZ", "SANCHEZ2"},
-	{"SCORCHER", "TRIBIKE", "TRIBIKE2", "TRIBIKE3", "FIXTER", "CRUISER", "BMX", "POLICEB", "AKUMA", "CARBONRS"},
-	{"BAGGER", "BATI", "BATI2", "RUFFIAN", "DAEMON", "DOUBLE", "PCJ", "VADER", "VIGERO", "FAGGIO2"},
-	{"HEXER", "ANNIHILATOR", "BUZZARD", "BUZZARD2", "CARGOBOB", "CARGOBOB2", "CARGOBOB3", "SKYLIFT", "POLMAV", "MAVERICK"},
-	{"NEMESIS", "FROGGER", "FROGGER2", "CUBAN800", "DUSTER", "STUNT", "MAMMATUS", "JET", "SHAMAL", "LUXOR"},
-	{"TITAN", "LAZER", "CARGOPLANE", "SQUALO", "MARQUIS", "DINGHY", "DINGHY2", "JETMAX", "PREDATOR", "TROPIC"},
-	{"SEASHARK", "SEASHARK2", "SUBMERSIBLE", "TRAILERS", "TRAILERS2", "TRAILERS3", "TVTRAILER", "RAKETRAILER", "TANKER", "TRAILERLOGS"},
-	{"TR2", "TR3", "TR4", "TRFLAT", "TRAILERSMALL", "VELUM", "ADDER", "VOLTIC", "VACCA", "BIFTA"},
-	{ "SPEEDER", "PARADISE", "KALAHARI", "JESTER", "TURISMOR", "VESTRA", "ALPHA", "HUNTLEY", "THRUST", "MASSACRO" },
-	{ "MASSACRO2", "ZENTORNO", "BLADE", "GLENDALE", "PANTO", "PIGALLE", "WARRENER", "RHAPSODY", "DUBSTA3", "MONSTER" },
-	{ "SOVEREIGN", "INNOVATION", "HAKUCHOU", "FUROREGT", "MILJET", "COQUETTE2", "BTYPE", "BUFFALO3", "DOMINATOR2", "GAUNTLET2" },
-	{ "MARSHALL", "DUKES", "DUKES2", "STALION", "STALION2", "BLISTA2", "BLISTA3", "DODO", "SUBMERSIBLE2", "HYDRA" },
-	{ "INSURGENT", "INSURGENT2", "TECHNICAL", "SAVAGE", "VALKYRIE", "KURUMA", "KURUMA2", "JESTER2", "CASCO", "VELUM2" },
-	{ "GUARDIAN", "ENDURO", "LECTRO", "SLAMVAN", "SLAMVAN2", "RATLOADER2", "SWIFT2", "LUXOR2", "FELTZER3", "OSIRIS" },
-	{ "VIRGO", "WINDSOR", "BESRA", "SWIFT", "BLIMP2", "VINDICATOR", "TORO", "T20", "COQUETTE3", "CHINO" },
-	{ "BRAWLER", "", "", "", "", "", "", "", "", "" }
+const int vehicleLineCount = 6;
+const int vehicleItemCount = 10;
+const int vehicleLastLineCount = 9;
+
+LPCSTR vehicleModels[vehicleLineCount][vehicleItemCount] = {
+	{ "BANSHEE", "BALLER", "BUCCANEER", "BUFFALO2", "CAVALCADE2", "COQUETTE", "GRESLEY", "DUNE2", "HOTKNIFE", "EXEMPLAR" },//轿车
+	{ "STRETCH", "FQ2", "MESA3", "POLICE2", "SANDKING2", "SUPERD", "DUBSTA3", "MONSTER", "BUFFALO3", "JESTER2" },
+	{ "BUS", "COACH", "AMBULANCE", "BARRACKS", "DUMP", "FIRETRUK", "FLATBED", "HAULER", "JOURNEY", "TOWTRUCK" },//卡车
+	{"RHINO", "AIRTUG", "BFINJECTION", "BLAZER3", "BULLDOZER", "CUTTER", "TRACTOR", "TRACTOR2", "BOATTRAILER", "ARMYTANKER" },//其他车
+	{ "BUZZARD2", "ANNIHILATOR", "CARGOBOB3", "SKYLIFT", "JET", "LUXOR", "LAZER", "HYDRA", "LAZER", "BLIMP" },//飞机
+	{ "SANCHEZ2", "SCORCHER", "DOUBLE", "SUNTRAP", "SQUALO", "DINGHY2", "JETMAX", "SEASHARK2", "TRAILERS3", "" },//bike 船
 };
+
+LPCSTR vehicleModelsName[vehicleLineCount][vehicleItemCount] = {
+	{ "BANSHEE", "BALLER", "BUCCANEER", "BUFFALO2", "CAVALCADE2", "COQUETTE", "GRESLEY", "DUNE2", "HOTKNIFE", "EXEMPLAR" },//轿车
+	{ "STRETCH", "FQ2", "MESA3", "POLICE2", "SANDKING2", "SUPERD", "DUBSTA3", "MONSTER", "BUFFALO3", "JESTER2" },
+	{ "BUS", "COACH", "AMBULANCE", "BARRACKS", "DUMP", "FIRETRUK", "FLATBED", "HAULER", "JOURNEY", "TOWTRUCK" },//卡车
+	{ "RHINO", "AIRTUG", "BFINJECTION", "BLAZER3", "BULLDOZER", "CUTTER", "TRACTOR", "TRACTOR2", "BOATTRAILER", "ARMYTANKER" },//其他车
+	{ "BUZZARD2", "ANNIHILATOR", "CARGOBOB3", "SKYLIFT", "JET", "LUXOR", "LAZER", "HYDRA", "LAZER", "BLIMP" },//飞机
+	{ "SANCHEZ2", "SCORCHER", "DOUBLE", "SUNTRAP", "SQUALO", "DINGHY2", "JETMAX", "SEASHARK2", "TRAILERS3", "" },//bike 船
+};
+
 
 int carspawnActiveLineIndex = 0;
 int carspawnActiveItemIndex = 0;
 
+
 bool process_carspawn_menu()
 {
 	DWORD waitTime = 150;
-	const int lineCount = 37;
-	const int itemCount = 10;
-	const int itemCountLastLine = 1;
+	const int lineCount = vehicleLineCount;
+	const int itemCount = vehicleItemCount;
+	const int itemCountLastLine = vehicleLastLineCount;
 	while (true)
 	{
 		// timed menu draw, used for pause after active line switch
@@ -1265,8 +1249,10 @@ bool process_carspawn_menu()
 			draw_menu_line(caption, 350.0, 15.0, 18.0, 0.0, 5.0, false, true);
 			for (int i = 0; i < itemCount; i++)
 				if (strlen(vehicleModels[carspawnActiveLineIndex][i]))
-					draw_menu_line(vehicleModels[carspawnActiveLineIndex][i], 100.0, 5.0, 200.0, 100.0 + i * 110.0, 5.0, i == carspawnActiveItemIndex, false, false);
-			
+				{
+					draw_menu_line(vehicleModelsName[carspawnActiveLineIndex][i], 100.0, 5.0, 200.0, 100.0 + i * 110.0, 5.0, i == carspawnActiveItemIndex, false, false);
+				}
+
 			update_features();
 			WAIT(0);
 		} while (GetTickCount() < maxTickCount);
@@ -1781,90 +1767,94 @@ void process_weather_menu()
 
 int activeLineIndexMisc = 0;
 
-void process_misc_menu()
-{
-	const float lineWidth = 250.0;
-	const int lineCount = 2;
 
-	std::string caption = "MISC  OPTIONS";
-
-	static struct {
-		LPCSTR		text;
-		bool		*pState;
-		bool		*pUpdated;
-	} lines[lineCount] = {
-		{"NEXT RADIO TRACK",	NULL,					NULL},
-		{"HIDE HUD",			&featureMiscHideHud,	NULL}		
-	};
-
-
-	DWORD waitTime = 150;
-	while (true)
-	{
-		// timed menu draw, used for pause after active line switch
-		DWORD maxTickCount = GetTickCount() + waitTime;
-		do 
-		{
-			// draw menu
-			draw_menu_line(caption, lineWidth, 15.0, 18.0, 0.0, 5.0, false, true);
-			for (int i = 0; i < lineCount; i++)
-				if (i != activeLineIndexMisc)
-					draw_menu_line(line_as_str(lines[i].text, lines[i].pState), 
-					lineWidth, 9.0, 60.0 + i * 36.0, 0.0, 9.0, false, false);
-			draw_menu_line(line_as_str(lines[activeLineIndexMisc].text, lines[activeLineIndexMisc].pState), 
-				lineWidth + 1.0, 11.0, 56.0 + activeLineIndexMisc * 36.0, 0.0, 7.0, true, false);
-
-			update_features();
-			WAIT(0);
-		} while (GetTickCount() < maxTickCount);
-		waitTime = 0;
-
-		// process buttons
-		bool bSelect, bBack, bUp, bDown;
-		get_button_state(&bSelect, &bBack, &bUp, &bDown, NULL, NULL);
-		if (bSelect)
-		{
-			menu_beep();
-			switch (activeLineIndexMisc)
-			{
-			// next radio track
-			case 0: 
-				if (ENTITY::DOES_ENTITY_EXIST(PLAYER::PLAYER_PED_ID()) && 
-					PED::IS_PED_IN_ANY_VEHICLE(PLAYER::PLAYER_PED_ID(), 0))
-						AUDIO::SKIP_RADIO_FORWARD();
-				break;
-			// switchable features
-			default:
-				if (lines[activeLineIndexMisc].pState)
-					*lines[activeLineIndexMisc].pState = !(*lines[activeLineIndexMisc].pState);
-				if (lines[activeLineIndexMisc].pUpdated)
-					*lines[activeLineIndexMisc].pUpdated = true;
-			}
-			waitTime = 200;
-		} else
-		if (bBack || trainer_switch_pressed())
-		{
-			menu_beep();
-			break;
-		} else
-		if (bUp)
-		{
-			menu_beep();
-			if (activeLineIndexMisc == 0) 
-				activeLineIndexMisc = lineCount;
-			activeLineIndexMisc--;
-			waitTime = 150;
-		} else
-		if (bDown)
-		{
-			menu_beep();
-			activeLineIndexMisc++;
-			if (activeLineIndexMisc == lineCount) 
-				activeLineIndexMisc = 0;			
-			waitTime = 150;
-		}
-	}
-}
+//void process_misc_menu()
+//{
+//	const float lineWidth = 250.0;
+//	const int lineCount = 2;
+//
+//	std::string caption = "MISC  OPTIONS";
+//
+//	static struct {
+//		LPCSTR		text;
+//		bool		*pState;
+//		bool		*pUpdated;
+//	} lines[lineCount] = {
+//		{ "NEXT RADIO TRACK",	NULL,					NULL },
+//		{ "HIDE HUD",			&featureMiscHideHud,	NULL }
+//	};
+//
+//
+//	DWORD waitTime = 150;
+//	while (true)
+//	{
+//		// timed menu draw, used for pause after active line switch
+//		DWORD maxTickCount = GetTickCount() + waitTime;
+//		do
+//		{
+//			// draw menu
+//			draw_menu_line(caption, lineWidth, 15.0, 18.0, 0.0, 5.0, false, true);
+//			for (int i = 0; i < lineCount; i++)
+//				if (i != activeLineIndexMisc)
+//					draw_menu_line(line_as_str(lines[i].text, lines[i].pState),
+//						lineWidth, 9.0, 60.0 + i * 36.0, 0.0, 9.0, false, false);
+//			draw_menu_line(line_as_str(lines[activeLineIndexMisc].text, lines[activeLineIndexMisc].pState),
+//				lineWidth + 1.0, 11.0, 56.0 + activeLineIndexMisc * 36.0, 0.0, 7.0, true, false);
+//
+//			update_features();
+//			WAIT(0);
+//		} while (GetTickCount() < maxTickCount);
+//		waitTime = 0;
+//
+//		// process buttons
+//		bool bSelect, bBack, bUp, bDown;
+//		get_button_state(&bSelect, &bBack, &bUp, &bDown, NULL, NULL);
+//		if (bSelect)
+//		{
+//			menu_beep();
+//			switch (activeLineIndexMisc)
+//			{
+//				// next radio track
+//			case 0:
+//				if (ENTITY::DOES_ENTITY_EXIST(PLAYER::PLAYER_PED_ID()) &&
+//					PED::IS_PED_IN_ANY_VEHICLE(PLAYER::PLAYER_PED_ID(), 0))
+//					AUDIO::SKIP_RADIO_FORWARD();
+//				break;
+//				// switchable features
+//			default:
+//				if (lines[activeLineIndexMisc].pState)
+//					*lines[activeLineIndexMisc].pState = !(*lines[activeLineIndexMisc].pState);
+//				if (lines[activeLineIndexMisc].pUpdated)
+//					*lines[activeLineIndexMisc].pUpdated = true;
+//			}
+//			waitTime = 200;
+//		}
+//		else
+//			if (bBack || trainer_switch_pressed())
+//			{
+//				menu_beep();
+//				break;
+//			}
+//			else
+//				if (bUp)
+//				{
+//					menu_beep();
+//					if (activeLineIndexMisc == 0)
+//						activeLineIndexMisc = lineCount;
+//					activeLineIndexMisc--;
+//					waitTime = 150;
+//				}
+//				else
+//					if (bDown)
+//					{
+//						menu_beep();
+//						activeLineIndexMisc++;
+//						if (activeLineIndexMisc == lineCount)
+//							activeLineIndexMisc = 0;
+//						waitTime = 150;
+//					}
+//	}
+//}
 
 int activeLineIndexMain = 0;
 
@@ -1882,7 +1872,7 @@ void process_main_menu()
 		"WORLD",
 		"TIME",
 		"WEATHER",
-		"MISC"
+		"ONEKEY"
 	};
 
 	DWORD waitTime = 150;
@@ -1931,7 +1921,10 @@ void process_main_menu()
 					process_weather_menu();
 					break;
 				case 6:
-					process_misc_menu();
+					featurePlayerInvincible = true; featurePlayerInvincibleUpdated = true;
+					featurePlayerNeverWanted = true;
+					featureWeaponNoReload = true;
+					featureVehInvincible = true; featureVehInvincibleUpdated = true;
 					break;
 			}
 			waitTime = 200;
