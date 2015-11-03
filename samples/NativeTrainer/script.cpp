@@ -18,6 +18,7 @@
 
 #include <string>
 #include <ctime>
+#include <comdef.h>
 
 #pragma warning(disable : 4244 4305) // double <-> float conversions
 
@@ -26,15 +27,17 @@ void draw_rect(float A_0, float A_1, float A_2, float A_3, int A_4, int A_5, int
 	GRAPHICS::DRAW_RECT((A_0 + (A_2 * 0.5f)), (A_1 + (A_3 * 0.5f)), A_2, A_3, A_4, A_5, A_6, A_7);
 }
 
-char *convertToMulti(wchar_t* wszTestNew) {
-	int nwszTestNewLen = lstrlenW(wszTestNew);
-	int nwszTestNewSize = sizeof(wszTestNew);
-	int nChar = WideCharToMultiByte(CP_UTF8, 0, wszTestNew, -1, NULL, 0, NULL, NULL);
-	nChar = nChar * sizeof(char);
-	char* szResult = new char[nChar];
-	ZeroMemory(szResult, nChar);
-	int i = WideCharToMultiByte(CP_UTF8, 0, wszTestNew, -1, szResult, nChar, NULL, NULL);
-	return szResult;
+char* KS_ANSI_to_UTF8(const char* szAnsi)
+{
+	if (szAnsi == NULL)
+		return NULL;
+
+	_bstr_t bstrTmp(szAnsi);
+	int nLen = ::WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR)bstrTmp, -1, NULL, 0, NULL, NULL);
+	char * pUTF8 = new char[nLen + 1];
+	ZeroMemory(pUTF8, nLen + 1);
+	::WideCharToMultiByte(CP_UTF8, 0, (LPCWSTR)bstrTmp, -1, pUTF8, nLen, NULL, NULL);
+	return pUTF8;
 }
 
 void draw_menu_line(std::string caption, float lineWidth, float lineHeight, float lineTop, float lineLeft, float textLeft, bool active, bool title, bool rescaleText = true)
@@ -91,7 +94,7 @@ void draw_menu_line(std::string caption, float lineWidth, float lineHeight, floa
 	UI::SET_TEXT_DROPSHADOW(0, 0, 0, 0, 0);
 	UI::SET_TEXT_EDGE(0, 0, 0, 0, 0);
 	UI::_SET_TEXT_ENTRY("STRING");
-	UI::_ADD_TEXT_COMPONENT_STRING((LPSTR)caption.c_str());
+	UI::_ADD_TEXT_COMPONENT_STRING((LPSTR)KS_ANSI_to_UTF8(caption.c_str()));
 	UI::_DRAW_TEXT(textLeftScaled, (((lineTopScaled + 0.00278f) + lineHeightScaled) - 0.005f));
 
 	// text lower part
@@ -102,7 +105,7 @@ void draw_menu_line(std::string caption, float lineWidth, float lineHeight, floa
 	UI::SET_TEXT_DROPSHADOW(0, 0, 0, 0, 0);
 	UI::SET_TEXT_EDGE(0, 0, 0, 0, 0);
 	UI::_SET_TEXT_GXT_ENTRY("STRING");
-	UI::_ADD_TEXT_COMPONENT_STRING((LPSTR)caption.c_str());
+	UI::_ADD_TEXT_COMPONENT_STRING((LPSTR)KS_ANSI_to_UTF8(caption.c_str()));
 	int num25 = UI::_0x9040DFB09BE75706(textLeftScaled, (((lineTopScaled + 0.00278f) + lineHeightScaled) - 0.005f));
 
 	// rect
@@ -1231,9 +1234,9 @@ LPCSTR vehicleModels[vehicleLineCount][vehicleItemCount] = {
 LPCSTR vehicleModelsName[vehicleLineCount][vehicleItemCount] = {
 	{ "BANSHEE", "BALLER", "BUCCANEER", "BUFFALO2", "CAVALCADE2", "COQUETTE", "GRESLEY", "DUNE2", "HOTKNIFE", "EXEMPLAR" },//轿车
 	{ "STRETCH", "FQ2", "MESA3", "POLICE2", "SANDKING2", "SUPERD", "DUBSTA3", "MONSTER", "BUFFALO3", "JESTER2" },
-	{ convertToMulti(L"公交车"), "COACH", "AMBULANCE", "BARRACKS", "DUMP", "FIRETRUK", "FLATBED", "HAULER", "JOURNEY", "TOWTRUCK" },//卡车
-	{ "RHINO", "AIRTUG", "BFINJECTION", "BLAZER3", "BULLDOZER", "CUTTER", "TRACTOR", "TRACTOR2", "BOATTRAILER", "ARMYTANKER" },//其他车
-	{ "BUZZARD2", "ANNIHILATOR", "CARGOBOB3", "SKYLIFT", "JET", "LUXOR", "LAZER", "HYDRA", "LAZER", "BLIMP" },//飞机
+	{ "公交車", "COACH", "AMBULANCE", "BARRACKS", "DUMP", "FIRETRUK", "FLATBED", "HAULER", "JOURNEY", "TOWTRUCK" },//卡车
+	{ "RHINO", "AIRTUG", "BFINJECTION", "BLAZER3", "BULLDOZER", "CUTTER", "拖拉機", "拖拉機2", "BOATTRAILER", "ARMYTANKER" },//其他车
+	{ "BUZZARD2", "ANNIHILATOR", "CARGOBOB3", "SKYLIFT", "JET", "LUXOR", "戰鬥機", "鷂式戰機", "LAZER", "BLIMP" },//飞机
 	{ "SANCHEZ2", "SCORCHER", "DOUBLE", "SUNTRAP", "SQUALO", "DINGHY2", "JETMAX", "SEASHARK2", "TRAILERS3", "" },//bike 船
 };
 
