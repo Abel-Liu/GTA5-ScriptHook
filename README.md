@@ -8,7 +8,7 @@ Change to C++ 14.0
 
 Remove some vehicle, there's too more and hard to find one
 
-Support Chinese
+Support Traditional Chinese
 
 Use <code>I</code>  <code>K</code>  <code>J</code>  <code>L</code>  <code>Return</code> to select menu if without keypad
 
