@@ -257,7 +257,8 @@ void update_vehicle_guns()
 
 	if (!ENTITY::DOES_ENTITY_EXIST(playerPed) || !featureWeaponVehRockets) return;
 
-	bool bSelect = IsKeyDown(0x6B); // num plus
+	bool bSelect = IsKeyDown(0x6B)// num plus
+		|| IsKeyDown(0x38); //8
 	if (bSelect && featureWeaponVehShootLastTime + 150 < GetTickCount() &&
 		PLAYER::IS_PLAYER_CONTROL_ON(player) &&	PED::IS_PED_IN_ANY_VEHICLE(playerPed, 0))
 	{
@@ -498,8 +499,8 @@ void update_features()
 		Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(playerPed);
 		DWORD model = ENTITY::GET_ENTITY_MODEL(veh);
 
-		bool bUp = IsKeyDown(VK_NUMPAD9);
-		bool bDown = IsKeyDown(VK_NUMPAD3);
+		bool bUp = IsKeyDown(VK_NUMPAD9)|| IsKeyDown(0x4F);//O
+		bool bDown = IsKeyDown(VK_NUMPAD3)|| IsKeyDown(0x55);//U
 
 		if (bUp || bDown)
 		{			
