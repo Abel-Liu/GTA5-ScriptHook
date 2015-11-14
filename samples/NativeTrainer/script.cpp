@@ -1221,24 +1221,24 @@ void process_weapon_menu()
 
 const int vehicleLineCount = 6;
 const int vehicleItemCount = 10;
-const int vehicleLastLineCount = 9;
+const int vehicleLastLineCount = 5;
 
 LPCSTR vehicleModels[vehicleLineCount][vehicleItemCount] = {
-	{ "BANSHEE", "BALLER", "BUCCANEER", "BUFFALO2", "CAVALCADE2", "COQUETTE", "GRESLEY", "DUNE2", "HOTKNIFE", "EXEMPLAR" },//轿车
-	{ "STRETCH", "FQ2", "MESA3", "POLICE2", "SANDKING2", "SUPERD", "DUBSTA3", "MONSTER", "BUFFALO3", "JESTER2" },
-	{ "BUS", "COACH", "AMBULANCE", "BARRACKS", "DUMP", "FIRETRUK", "FLATBED", "HAULER", "JOURNEY", "TOWTRUCK" },//卡车
-	{ "RHINO", "AIRTUG", "BFINJECTION", "BLAZER3", "BULLDOZER", "CUTTER", "TRACTOR", "TRACTOR2", "BOATTRAILER", "ARMYTANKER" },//其他车
+	{ "SUPERD", "EXEMPLAR", "FQ2", "BUFFALO2", "BLAZER3", "POLICE2", "COQUETTE", "GRESLEY", "HOTKNIFE", "BANSHEE" },//轿车
+	{ "STRETCH", "RHINO", "MESA3", "DUNE2", "SANDKING2", "DUBSTA3", "MONSTER", "BUFFALO3", "AIRTUG", "BFINJECTION" },
+	{ "BUS", "COACH", "AMBULANCE","FIRETRUK", "BARRACKS", "DUMP", "FLATBED", "HAULER", "JOURNEY", "TOWTRUCK" },//卡车
+	{ "SANCHEZ2", "DOUBLE", "SCORCHER", "BULLDOZER", "CUTTER", "TRACTOR", "TRACTOR2", "BOATTRAILER", "ARMYTANKER", "TRAILERS3" },//其他车
 	{ "BUZZARD2", "ANNIHILATOR", "CARGOBOB3", "SKYLIFT", "JET", "LUXOR", "LAZER", "HYDRA", "LAZER", "BLIMP" },//飞机
-	{ "SANCHEZ2", "SCORCHER", "DOUBLE", "SUNTRAP", "SQUALO", "DINGHY2", "JETMAX", "SEASHARK2", "TRAILERS3", "" },//bike 船
+	{ "SUNTRAP", "SQUALO", "DINGHY2", "JETMAX", "SEASHARK2", "", "", "", "", "" },//船
 };
 
 LPCSTR vehicleModelsName[vehicleLineCount][vehicleItemCount] = {
-	{ "BANSHEE", "BALLER", "BUCCANEER", "BUFFALO2", "CAVALCADE2", "COQUETTE", "GRESLEY", "DUNE2", "HOTKNIFE", "EXEMPLAR" },//轿车
-	{ "STRETCH", "FQ2", "MESA3", "POLICE2", "SANDKING2", "SUPERD", "DUBSTA3", "MONSTER", "BUFFALO3", "JESTER2" },
-	{ "BUS", "COACH", "AMBULANCE", "BARRACKS", "DUMP", "FIRETRUK", "FLATBED", "HAULER", "JOURNEY", "TOWTRUCK" },//卡车
-	{ "RHINO", "AIRTUG", "BFINJECTION", "BLAZER3", "BULLDOZER", "CUTTER", "TRACTOR", "TRACTOR2", "BOATTRAILER", "ARMYTANKER" },//其他车
-	{ "BUZZARD2", "ANNIHILATOR", "CARGOBOB3", "SKYLIFT", "JET", "LUXOR", "LAZER", "HYDRA", "LAZER", "BLIMP" },//飞机
-	{ "SANCHEZ2", "SCORCHER", "DOUBLE", "SUNTRAP", "SQUALO", "DINGHY2", "JETMAX", "SEASHARK2", "TRAILERS3", "" },//bike 船
+	{ "SUPERD", "EXEMPLAR", "SUV", "BUFFALO2", "四輪摩托", "警車", "COQUETTE", "GRESLEY",  "HOTKNIFE", "BANSHEE" },//轿车
+	{ "加長轎車", "坦克", "山地吉普", "沙丘車", "山地皮卡", "六輪皮卡", "大輪車", "賽車", "機場小卡", "迷你山地" },
+	{ "公交車", "客車", "救護車", "救火車", "軍用卡車", "運土車", "卡車", "卡車頭", "旅行車", "拖車" },//卡车
+	{ "山地摩托", "摩托車", "自行車", "推土機", "切削者", "拖拉機1", "拖拉機2", "運船車", "油罐", "貨箱" },//其他车
+	{ "小直升機", "大直升機", "運輸直升機", "高輪直升機", "大客機", "商務機", "戰鬥機", "鷂式戰機", "LAZER", "汽艇" },//飞机
+	{ "船", "快艇", "氣墊船", "快艇2", "小艇", "", "", "", "", "" },//船
 };
 
 
@@ -1940,6 +1940,8 @@ void process_main_menu()
 					featurePlayerNeverWanted = true;
 					featureWeaponNoReload = true;
 					featureVehInvincible = true; featureVehInvincibleUpdated = true;
+					featureVehWrapInSpawned = true;
+					featureVehSpeedBoost = true;
 					break;
 			}
 			waitTime = 200;
