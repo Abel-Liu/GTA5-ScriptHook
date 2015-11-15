@@ -1,16 +1,20 @@
 ﻿/*
 	THIS FILE IS A PART OF GTA V SCRIPT HOOK SDK
-				http://dev-c.com			
+				http://dev-c.com
 			(C) Alexander Blade 2015
 */
 
 /*
-	F4					activate
-	NUM2/8/4/6			navigate thru the menus and lists (numlock must be on)
-	NUM5 				select
-	NUM0/BACKSPACE/F4 	back
-	NUM9/3 				use vehicle boost when active
-	NUM+ 				use vehicle rockets when active
+				F4					activate
+	I/K/J/L		NUM2/8/4/6			navigate thru the menus and lists (numlock must be on)
+	ENTER		NUM5 				select
+				NUM0/BACKSPACE/F4 	back
+	O/U			NUM9/3 				use vehicle boost when active
+	8			NUM+ 				use vehicle rockets when active
+
+				F5					Teleport to marker
+				F6					Get a car quickly
+				F7					Get LAZER quickly
 */
 
 #include "script.h"
@@ -43,8 +47,8 @@ char* KS_ANSI_to_UTF8(const char* szAnsi)
 void draw_menu_line(std::string caption, float lineWidth, float lineHeight, float lineTop, float lineLeft, float textLeft, bool active, bool title, bool rescaleText = true)
 {
 	// default values
-	int text_col[4] = {255, 255, 255, 255},
-		rect_col[4] = {70, 95, 95, 255};
+	int text_col[4] = { 255, 255, 255, 255 },
+		rect_col[4] = { 70, 95, 95, 255 };
 	float text_scale = 0.35;
 	int font = 0;
 
@@ -109,9 +113,9 @@ void draw_menu_line(std::string caption, float lineWidth, float lineHeight, floa
 	int num25 = UI::_0x9040DFB09BE75706(textLeftScaled, (((lineTopScaled + 0.00278f) + lineHeightScaled) - 0.005f));
 
 	// rect
-	draw_rect(lineLeftScaled, lineTopScaled + (0.00278f), 
+	draw_rect(lineLeftScaled, lineTopScaled + (0.00278f),
 		lineWidthScaled, ((((float)(num25)* UI::_0xDB88A37483346780(text_scale, 0)) + (lineHeightScaled * 2.0f)) + 0.005f),
-		rect_col[0], rect_col[1], rect_col[2], rect_col[3]);	
+		rect_col[0], rect_col[1], rect_col[2], rect_col[3]);
 }
 
 bool trainer_switch_pressed()
@@ -152,7 +156,8 @@ void update_status_text()
 		if (statusTextGxtEntry)
 		{
 			UI::_SET_TEXT_ENTRY((char *)statusText.c_str());
-		} else
+		}
+		else
 		{
 			UI::_SET_TEXT_ENTRY("STRING");
 			UI::_ADD_TEXT_COMPONENT_STRING((char *)statusText.c_str());
@@ -169,66 +174,66 @@ void set_status_text(std::string str, DWORD time = 2500, bool isGxtEntry = false
 }
 
 // features
-bool featurePlayerInvincible			=	false;
-bool featurePlayerInvincibleUpdated		=	false;
-bool featurePlayerNeverWanted			=	false;
-bool featurePlayerIgnored				=	false;
-bool featurePlayerIgnoredUpdated		=	false;
-bool featurePlayerUnlimitedAbility		=	false;
-bool featurePlayerNoNoise				=	false;
-bool featurePlayerNoNoiseUpdated		=	false;
-bool featurePlayerFastSwim				=	false;
-bool featurePlayerFastSwimUpdated		=	false;
-bool featurePlayerFastRun				=	false;
-bool featurePlayerFastRunUpdated		=	false;
-bool featurePlayerSuperJump				=	false;
+bool featurePlayerInvincible = false;
+bool featurePlayerInvincibleUpdated = false;
+bool featurePlayerNeverWanted = false;
+bool featurePlayerIgnored = false;
+bool featurePlayerIgnoredUpdated = false;
+bool featurePlayerUnlimitedAbility = false;
+bool featurePlayerNoNoise = false;
+bool featurePlayerNoNoiseUpdated = false;
+bool featurePlayerFastSwim = false;
+bool featurePlayerFastSwimUpdated = false;
+bool featurePlayerFastRun = false;
+bool featurePlayerFastRunUpdated = false;
+bool featurePlayerSuperJump = false;
 
-bool featureWeaponNoReload				=	false;
-bool featureWeaponFireAmmo				=	false;
-bool featureWeaponExplosiveAmmo			=	false;
-bool featureWeaponExplosiveMelee		=	false;
-bool featureWeaponVehRockets			=	false;
+bool featureWeaponNoReload = false;
+bool featureWeaponFireAmmo = false;
+bool featureWeaponExplosiveAmmo = false;
+bool featureWeaponExplosiveMelee = false;
+bool featureWeaponVehRockets = false;
 
-DWORD featureWeaponVehShootLastTime		=	0;
+DWORD featureWeaponVehShootLastTime = 0;
 
-bool featureVehInvincible				=	false;
-bool featureVehInvincibleUpdated		=	false;
-bool featureVehInvincibleWheels			=	false;
-bool featureVehInvincibleWheelsUpdated	=	false;
-bool featureVehSeatbelt					=	false;
-bool featureVehSeatbeltUpdated			=	false;
-bool featureVehSpeedBoost				=	false;
-bool featureVehWrapInSpawned			=	false;
+bool featureVehInvincible = false;
+bool featureVehInvincibleUpdated = false;
+bool featureVehInvincibleWheels = false;
+bool featureVehInvincibleWheelsUpdated = false;
+bool featureVehSeatbelt = false;
+bool featureVehSeatbeltUpdated = false;
+bool featureVehSpeedBoost = false;
+bool featureVehWrapInSpawned = false;
 
-bool featureWorldMoonGravity			=	false;
-bool featureWorldRandomCops				=	true;
-bool featureWorldRandomTrains			=	true;
-bool featureWorldRandomBoats			=	true;
-bool featureWorldGarbageTrucks			=	true;
+bool featureWorldMoonGravity = false;
+bool featureWorldRandomCops = true;
+bool featureWorldRandomTrains = true;
+bool featureWorldRandomBoats = true;
+bool featureWorldGarbageTrucks = true;
 
-bool featureTimePaused					=	false;
-bool featureTimePausedUpdated			=	false;
-bool featureTimeSynced					=	false;
+bool featureTimePaused = false;
+bool featureTimePausedUpdated = false;
+bool featureTimeSynced = false;
 
-bool featureWeatherWind					=	false;
-bool featureWeatherPers					=	false;
+bool featureWeatherWind = false;
+bool featureWeatherPers = false;
 
-bool featureMiscLockRadio				=	false;
-bool featureMiscHideHud					=	false;
+bool featureMiscLockRadio = false;
+bool featureMiscHideHud = false;
 
 
 // player model control, switching on normal ped model when needed	
-void check_player_model() 
+void check_player_model()
 {
 	// common variables
 	Player player = PLAYER::PLAYER_ID();
-	Ped playerPed = PLAYER::PLAYER_PED_ID();	
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
 
 	if (!ENTITY::DOES_ENTITY_EXIST(playerPed)) return;
 
 	Hash model = ENTITY::GET_ENTITY_MODEL(playerPed);
 	if (ENTITY::IS_ENTITY_DEAD(playerPed) || PLAYER::IS_PLAYER_BEING_ARRESTED(player, TRUE))
-		if (model != GAMEPLAY::GET_HASH_KEY("player_zero") && 
+		if (model != GAMEPLAY::GET_HASH_KEY("player_zero") &&
 			model != GAMEPLAY::GET_HASH_KEY("player_one") &&
 			model != GAMEPLAY::GET_HASH_KEY("player_two"))
 		{
@@ -253,14 +258,14 @@ void check_player_model()
 void update_vehicle_guns()
 {
 	Player player = PLAYER::PLAYER_ID();
-	Ped playerPed = PLAYER::PLAYER_PED_ID();	
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
 
 	if (!ENTITY::DOES_ENTITY_EXIST(playerPed) || !featureWeaponVehRockets) return;
 
 	bool bSelect = IsKeyDown(0x6B)// num plus
 		|| IsKeyDown(0x38); //8
 	if (bSelect && featureWeaponVehShootLastTime + 150 < GetTickCount() &&
-		PLAYER::IS_PLAYER_CONTROL_ON(player) &&	PED::IS_PED_IN_ANY_VEHICLE(playerPed, 0))
+		PLAYER::IS_PLAYER_CONTROL_ON(player) && PED::IS_PED_IN_ANY_VEHICLE(playerPed, 0))
 	{
 		Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(playerPed);
 
@@ -276,16 +281,16 @@ void update_vehicle_guns()
 		}
 
 		Vector3 coords0from = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(veh, -(v1.x + 0.25f), v1.y + 1.25f, 0.1);
-		Vector3 coords1from = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(veh,  (v1.x + 0.25f), v1.y + 1.25f, 0.1);
+		Vector3 coords1from = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(veh, (v1.x + 0.25f), v1.y + 1.25f, 0.1);
 		Vector3 coords0to = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(veh, -v1.x, v1.y + 100.0f, 0.1f);
-		Vector3 coords1to = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(veh,  v1.x, v1.y + 100.0f, 0.1f);
+		Vector3 coords1to = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(veh, v1.x, v1.y + 100.0f, 0.1f);
 
-		GAMEPLAY::SHOOT_SINGLE_BULLET_BETWEEN_COORDS(coords0from.x, coords0from.y, coords0from.z, 
-													 coords0to.x, coords0to.y, coords0to.z, 
-													 250, 1, weaponAssetRocket, playerPed, 1, 0, -1.0);
-		GAMEPLAY::SHOOT_SINGLE_BULLET_BETWEEN_COORDS(coords1from.x, coords1from.y, coords1from.z, 
-													 coords1to.x, coords1to.y, coords1to.z, 
-													 250, 1, weaponAssetRocket, playerPed, 1, 0, -1.0);
+		GAMEPLAY::SHOOT_SINGLE_BULLET_BETWEEN_COORDS(coords0from.x, coords0from.y, coords0from.z,
+			coords0to.x, coords0to.y, coords0to.z,
+			250, 1, weaponAssetRocket, playerPed, 1, 0, -1.0);
+		GAMEPLAY::SHOOT_SINGLE_BULLET_BETWEEN_COORDS(coords1from.x, coords1from.y, coords1from.z,
+			coords1to.x, coords1to.y, coords1to.z,
+			250, 1, weaponAssetRocket, playerPed, 1, 0, -1.0);
 
 		featureWeaponVehShootLastTime = GetTickCount();
 	}
@@ -294,7 +299,7 @@ void update_vehicle_guns()
 bool skinchanger_used = false;
 
 // Updates all features that can be turned off by the game, being called each game frame
-void update_features() 
+void update_features()
 {
 	update_status_text();
 
@@ -313,7 +318,7 @@ void update_features()
 
 	// common variables
 	Player player = PLAYER::PLAYER_ID();
-	Ped playerPed = PLAYER::PLAYER_PED_ID();	
+	Ped playerPed = PLAYER::PLAYER_PED_ID();
 	BOOL bPlayerExists = ENTITY::DOES_ENTITY_EXIST(playerPed);
 
 	// player invincible
@@ -446,7 +451,7 @@ void update_features()
 		{
 			Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(playerPed);
 			ENTITY::SET_ENTITY_INVINCIBLE(veh, TRUE);
-			ENTITY::SET_ENTITY_PROOFS(veh, 1, 1, 1, 1, 1, 1, 1, 1);	
+			ENTITY::SET_ENTITY_PROOFS(veh, 1, 1, 1, 1, 1, 1, 1, 1);
 			VEHICLE::SET_VEHICLE_TYRES_CAN_BURST(veh, 0);
 			VEHICLE::SET_VEHICLE_WHEELS_CAN_BREAK(veh, 0);
 			VEHICLE::SET_VEHICLE_CAN_BE_VISIBLY_DAMAGED(veh, 0);
@@ -499,20 +504,21 @@ void update_features()
 		Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(playerPed);
 		DWORD model = ENTITY::GET_ENTITY_MODEL(veh);
 
-		bool bUp = IsKeyDown(VK_NUMPAD9)|| IsKeyDown(0x4F);//O
-		bool bDown = IsKeyDown(VK_NUMPAD3)|| IsKeyDown(0x55);//U
+		bool bUp = IsKeyDown(VK_NUMPAD9) || IsKeyDown(0x4F);//O
+		bool bDown = IsKeyDown(VK_NUMPAD3) || IsKeyDown(0x55);//U
 
 		if (bUp || bDown)
-		{			
+		{
 			float speed = ENTITY::GET_ENTITY_SPEED(veh);
-			if (bUp) 
+			if (bUp)
 			{
 				if (speed < 3.0f) speed = 3.0f;
 				speed += speed * 0.05f;
 				VEHICLE::SET_VEHICLE_FORWARD_SPEED(veh, speed);
-			} else
-			if (ENTITY::IS_ENTITY_IN_AIR(veh) || speed > 5.0) 
-				VEHICLE::SET_VEHICLE_FORWARD_SPEED(veh, 0.0);
+			}
+			else
+				if (ENTITY::IS_ENTITY_IN_AIR(veh) || speed > 5.0)
+					VEHICLE::SET_VEHICLE_FORWARD_SPEED(veh, 0.0);
 		}
 	}
 
@@ -694,7 +700,7 @@ bool process_skinchanger_menu()
 	{
 		// timed menu draw, used for pause after active line switch
 		DWORD maxTickCount = GetTickCount() + waitTime;
-		do 
+		do
 		{
 			// draw menu
 			char caption[32];
@@ -703,7 +709,7 @@ bool process_skinchanger_menu()
 			for (int i = 0; i < itemCount; i++)
 				if (strlen(pedModels[skinchangerActiveLineIndex][i]) || strcmp(pedModelNames[skinchangerActiveLineIndex][i], "NONE") == 0)
 					draw_menu_line(pedModelNames[skinchangerActiveLineIndex][i], 100.0f, 5.0f, 200.0f, 100.0f + i * 110.0f, 5.0f, i == skinchangerActiveItemIndex, false, false);
-			
+
 			update_features();
 			WAIT(0);
 		} while (GetTickCount() < maxTickCount);
@@ -711,19 +717,19 @@ bool process_skinchanger_menu()
 
 		bool bSelect, bBack, bUp, bDown, bLeft, bRight;
 		get_button_state(&bSelect, &bBack, &bUp, &bDown, &bLeft, &bRight);
-		
+
 		if (bSelect)
 		{
 			menu_beep();
 			DWORD model = GAMEPLAY::GET_HASH_KEY((char *)pedModels[skinchangerActiveLineIndex][skinchangerActiveItemIndex]);
 			if (STREAMING::IS_MODEL_IN_CDIMAGE(model) && STREAMING::IS_MODEL_VALID(model))
 			{
-				STREAMING::REQUEST_MODEL(model);				
-				while (!STREAMING::HAS_MODEL_LOADED(model))	WAIT(0); 
+				STREAMING::REQUEST_MODEL(model);
+				while (!STREAMING::HAS_MODEL_LOADED(model))	WAIT(0);
 				//STREAMING::LOAD_ALL_OBJECTS_NOW();
 				PLAYER::SET_PLAYER_MODEL(PLAYER::PLAYER_ID(), model);
 				//PED::SET_PED_RANDOM_COMPONENT_VARIATION(PLAYER::PLAYER_PED_ID(), FALSE);
-				PED::SET_PED_DEFAULT_COMPONENT_VARIATION(PLAYER::PLAYER_PED_ID());				
+				PED::SET_PED_DEFAULT_COMPONENT_VARIATION(PLAYER::PLAYER_PED_ID());
 				WAIT(0);
 				for (int i = 0; i < 12; i++)
 					for (int j = 0; j < 100; j++)
@@ -738,48 +744,53 @@ bool process_skinchanger_menu()
 					}
 				skinchanger_used = true;
 				WAIT(100);
-				STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(model);				
+				STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(model);
 				waitTime = 200;
 			}
-		} else
-		if (bBack)
-		{
-			menu_beep();
-			break;
-		} else
-		if (bRight)
-		{
-			menu_beep();
-			skinchangerActiveItemIndex++;
-			int itemsMax = (skinchangerActiveLineIndex == (lineCount - 1)) ? itemCountLastLine : itemCount;
-			if (skinchangerActiveItemIndex == itemsMax) 
-				skinchangerActiveItemIndex = 0;			
-			waitTime = 100;
-		} else
-		if (bLeft)
-		{
-			menu_beep();
-			if (skinchangerActiveItemIndex == 0) 
-				skinchangerActiveItemIndex = (skinchangerActiveLineIndex == (lineCount - 1)) ? itemCountLastLine : itemCount;
-			skinchangerActiveItemIndex--;
-			waitTime = 100;
-		} else
-		if (bUp)
-		{
-			menu_beep();
-			if (skinchangerActiveLineIndex == 0) 
-				skinchangerActiveLineIndex = lineCount;
-			skinchangerActiveLineIndex--;
-			waitTime = 200;
-		} else
-		if (bDown)
-		{
-			menu_beep();
-			skinchangerActiveLineIndex++;
-			if (skinchangerActiveLineIndex == lineCount) 
-				skinchangerActiveLineIndex = 0;			
-			waitTime = 200;
 		}
+		else
+			if (bBack)
+			{
+				menu_beep();
+				break;
+			}
+			else
+				if (bRight)
+				{
+					menu_beep();
+					skinchangerActiveItemIndex++;
+					int itemsMax = (skinchangerActiveLineIndex == (lineCount - 1)) ? itemCountLastLine : itemCount;
+					if (skinchangerActiveItemIndex == itemsMax)
+						skinchangerActiveItemIndex = 0;
+					waitTime = 100;
+				}
+				else
+					if (bLeft)
+					{
+						menu_beep();
+						if (skinchangerActiveItemIndex == 0)
+							skinchangerActiveItemIndex = (skinchangerActiveLineIndex == (lineCount - 1)) ? itemCountLastLine : itemCount;
+						skinchangerActiveItemIndex--;
+						waitTime = 100;
+					}
+					else
+						if (bUp)
+						{
+							menu_beep();
+							if (skinchangerActiveLineIndex == 0)
+								skinchangerActiveLineIndex = lineCount;
+							skinchangerActiveLineIndex--;
+							waitTime = 200;
+						}
+						else
+							if (bDown)
+							{
+								menu_beep();
+								skinchangerActiveLineIndex++;
+								if (skinchangerActiveLineIndex == lineCount)
+									skinchangerActiveLineIndex = 0;
+								waitTime = 200;
+							}
 		if (skinchangerActiveLineIndex == (lineCount - 1))
 			if (skinchangerActiveItemIndex >= itemCountLastLine)
 				skinchangerActiveItemIndex = 0;
@@ -792,7 +803,7 @@ int teleportActiveLineIndex = 0;
 bool process_teleport_menu()
 {
 	const float lineWidth = 250.0;
-	const int lineCount	= 17;
+	const int lineCount = 17;
 
 	std::string caption = "TELEPORT";
 
@@ -826,7 +837,7 @@ bool process_teleport_menu()
 	{
 		// timed menu draw, used for pause after active line switch
 		DWORD maxTickCount = GetTickCount() + waitTime;
-		do 
+		do
 		{
 			// draw menu
 			draw_menu_line(caption, lineWidth, 15.0, 18.0, 0.0, 5.0, false, true);
@@ -849,34 +860,34 @@ bool process_teleport_menu()
 
 			// get entity to teleport
 			Entity e = PLAYER::PLAYER_PED_ID();
-			if (PED::IS_PED_IN_ANY_VEHICLE(e, 0)) 
+			if (PED::IS_PED_IN_ANY_VEHICLE(e, 0))
 				e = PED::GET_VEHICLE_PED_IS_USING(e);
 
 			// get coords
 			Vector3 coords;
 			bool success = false;
 			if (teleportActiveLineIndex == 0) // marker
-			{			
+			{
 				bool blipFound = false;
 				// search for marker blip
 				int blipIterator = UI::_GET_BLIP_INFO_ID_ITERATOR();
 				for (Blip i = UI::GET_FIRST_BLIP_INFO_ID(blipIterator); UI::DOES_BLIP_EXIST(i) != 0; i = UI::GET_NEXT_BLIP_INFO_ID(blipIterator))
 				{
-					if (UI::GET_BLIP_INFO_ID_TYPE(i) == 4) 
+					if (UI::GET_BLIP_INFO_ID_TYPE(i) == 4)
 					{
 						coords = UI::GET_BLIP_INFO_ID_COORD(i);
 						blipFound = true;
 						break;
 					}
-				}	
+				}
 				if (blipFound)
 				{
 					// load needed map region and check height levels for ground existence
 					bool groundFound = false;
 					static float groundCheckHeight[] = {
-						100.0, 150.0, 50.0, 0.0, 200.0, 250.0, 300.0, 350.0, 400.0, 
+						100.0, 150.0, 50.0, 0.0, 200.0, 250.0, 300.0, 350.0, 400.0,
 						450.0, 500.0, 550.0, 600.0, 650.0, 700.0, 750.0, 800.0
-					};					
+					};
 					for (int i = 0; i < sizeof(groundCheckHeight) / sizeof(float); i++)
 					{
 						ENTITY::SET_ENTITY_COORDS_NO_OFFSET(e, coords.x, coords.y, groundCheckHeight[i], 0, 0, 1);
@@ -895,12 +906,14 @@ bool process_teleport_menu()
 						WEAPON::GIVE_DELAYED_WEAPON_TO_PED(PLAYER::PLAYER_PED_ID(), 0xFBAB5776, 1, 0);
 					}
 					success = true;
-				} else
+				}
+				else
 				{
 					set_status_text("map marker isn't set");
 				}
 
-			} else // predefined coords
+			}
+			else // predefined coords
 			{
 				coords.x = lines[teleportActiveLineIndex].x;
 				coords.y = lines[teleportActiveLineIndex].y;
@@ -916,28 +929,28 @@ bool process_teleport_menu()
 				set_status_text("teleported");
 				return true;
 			}
-			
+
 			waitTime = 200;
-		} else
-		if (bBack || trainer_switch_pressed())
+		}
+		else if (bBack || trainer_switch_pressed())
 		{
 			menu_beep();
 			break;
-		} else
-		if (bUp)
+		}
+		else if (bUp)
 		{
 			menu_beep();
-			if (teleportActiveLineIndex == 0) 
+			if (teleportActiveLineIndex == 0)
 				teleportActiveLineIndex = lineCount;
 			teleportActiveLineIndex--;
 			waitTime = 150;
-		} else
-		if (bDown)
+		}
+		else if (bDown)
 		{
 			menu_beep();
 			teleportActiveLineIndex++;
-			if (teleportActiveLineIndex == lineCount) 
-				teleportActiveLineIndex = 0;			
+			if (teleportActiveLineIndex == lineCount)
+				teleportActiveLineIndex = 0;
 			waitTime = 150;
 		}
 	}
@@ -956,7 +969,7 @@ void process_player_menu()
 {
 	const float lineWidth = 250.0;
 	const int lineCount = 15;
-	
+
 	std::string caption = "PLAYER  OPTIONS";
 
 	static struct {
@@ -986,16 +999,16 @@ void process_player_menu()
 	{
 		// timed menu draw, used for pause after active line switch
 		DWORD maxTickCount = GetTickCount() + waitTime;
-		do 
+		do
 		{
 			// draw menu
 			draw_menu_line(caption, lineWidth, 15.0, 18.0, 0.0, 5.0, false, true);
 			for (int i = 0; i < lineCount; i++)
 				if (i != activeLineIndexPlayer)
-					draw_menu_line(line_as_str(lines[i].text, lines[i].pState), 
-								   lineWidth, 9.0, 60.0 + i * 36.0, 0.0, 9.0, false, false);
-			draw_menu_line(line_as_str(lines[activeLineIndexPlayer].text, lines[activeLineIndexPlayer].pState), 
-						   lineWidth + 1.0, 11.0, 56.0 + activeLineIndexPlayer * 36.0, 0.0, 7.0, true, false);
+					draw_menu_line(line_as_str(lines[i].text, lines[i].pState),
+						lineWidth, 9.0, 60.0 + i * 36.0, 0.0, 9.0, false, false);
+			draw_menu_line(line_as_str(lines[activeLineIndexPlayer].text, lines[activeLineIndexPlayer].pState),
+				lineWidth + 1.0, 11.0, 56.0 + activeLineIndexPlayer * 36.0, 0.0, 7.0, true, false);
 
 			update_features();
 			WAIT(0);
@@ -1017,96 +1030,99 @@ void process_player_menu()
 			switch (activeLineIndexPlayer)
 			{
 				// skin changer
-				case 0:
-					if (process_skinchanger_menu())	return;
-					break;
+			case 0:
+				if (process_skinchanger_menu())	return;
+				break;
 				// teleport
-				case 1:
-					if (process_teleport_menu()) return;
-					break;
+			case 1:
+				if (process_teleport_menu()) return;
+				break;
 				// fix player
-				case 2:
-					{
-						ENTITY::SET_ENTITY_HEALTH(playerPed, ENTITY::GET_ENTITY_MAX_HEALTH(playerPed));
-						PED::ADD_ARMOUR_TO_PED(playerPed, PLAYER::GET_PLAYER_MAX_ARMOUR(player) - PED::GET_PED_ARMOUR(playerPed));
-						if (PED::IS_PED_IN_ANY_VEHICLE(playerPed, 0))
-						{
-							Vehicle playerVeh = PED::GET_VEHICLE_PED_IS_USING(playerPed);
-							if (ENTITY::DOES_ENTITY_EXIST(playerVeh) && !ENTITY::IS_ENTITY_DEAD(playerVeh))
-								VEHICLE::SET_VEHICLE_FIXED(playerVeh);
-						}
-						set_status_text("player fixed");
-					}
-					break;
-				// reset model skin
-				case 3:
-					{
-						PED::SET_PED_DEFAULT_COMPONENT_VARIATION(playerPed);
-						set_status_text("using default model skin");
-					}
-					break;
-				// add cash
-				case 4: 
-					for (int i = 0; i < 3; i++)
-					{
-						char statNameFull[32];
-						sprintf_s(statNameFull, "SP%d_TOTAL_CASH", i);
-						Hash hash = GAMEPLAY::GET_HASH_KEY(statNameFull);
-						int val;
-						STATS::STAT_GET_INT(hash, &val, -1);
-						val += 1000000;
-						STATS::STAT_SET_INT(hash, val, 1);
-					}
-					set_status_text("cash added");
-					break;
+			case 2:
+			{
+				ENTITY::SET_ENTITY_HEALTH(playerPed, ENTITY::GET_ENTITY_MAX_HEALTH(playerPed));
+				PED::ADD_ARMOUR_TO_PED(playerPed, PLAYER::GET_PLAYER_MAX_ARMOUR(player) - PED::GET_PED_ARMOUR(playerPed));
+				if (PED::IS_PED_IN_ANY_VEHICLE(playerPed, 0))
+				{
+					Vehicle playerVeh = PED::GET_VEHICLE_PED_IS_USING(playerPed);
+					if (ENTITY::DOES_ENTITY_EXIST(playerVeh) && !ENTITY::IS_ENTITY_DEAD(playerVeh))
+						VEHICLE::SET_VEHICLE_FIXED(playerVeh);
+				}
+				set_status_text("player fixed");
+			}
+			break;
+			// reset model skin
+			case 3:
+			{
+				PED::SET_PED_DEFAULT_COMPONENT_VARIATION(playerPed);
+				set_status_text("using default model skin");
+			}
+			break;
+			// add cash
+			case 4:
+				for (int i = 0; i < 3; i++)
+				{
+					char statNameFull[32];
+					sprintf_s(statNameFull, "SP%d_TOTAL_CASH", i);
+					Hash hash = GAMEPLAY::GET_HASH_KEY(statNameFull);
+					int val;
+					STATS::STAT_GET_INT(hash, &val, -1);
+					val += 1000000;
+					STATS::STAT_SET_INT(hash, val, 1);
+				}
+				set_status_text("cash added");
+				break;
 				// wanted up
-				case 5:	
-					if (bPlayerExists && PLAYER::GET_PLAYER_WANTED_LEVEL(player) < 5)
-					{
-						PLAYER::SET_PLAYER_WANTED_LEVEL(player, PLAYER::GET_PLAYER_WANTED_LEVEL(player) + 1, 0);
-						PLAYER::SET_PLAYER_WANTED_LEVEL_NOW(player, 0);
-						set_status_text("wanted up");
-					}
-					break;
+			case 5:
+				if (bPlayerExists && PLAYER::GET_PLAYER_WANTED_LEVEL(player) < 5)
+				{
+					PLAYER::SET_PLAYER_WANTED_LEVEL(player, PLAYER::GET_PLAYER_WANTED_LEVEL(player) + 1, 0);
+					PLAYER::SET_PLAYER_WANTED_LEVEL_NOW(player, 0);
+					set_status_text("wanted up");
+				}
+				break;
 				// wanted down
-				case 6:	
-					if (bPlayerExists && PLAYER::GET_PLAYER_WANTED_LEVEL(player) > 0)
-					{
-						PLAYER::SET_PLAYER_WANTED_LEVEL(player, PLAYER::GET_PLAYER_WANTED_LEVEL(player) - 1, 0);
-						PLAYER::SET_PLAYER_WANTED_LEVEL_NOW(player, 0);
-						set_status_text("wanted down");
-					}
-					break;
+			case 6:
+				if (bPlayerExists && PLAYER::GET_PLAYER_WANTED_LEVEL(player) > 0)
+				{
+					PLAYER::SET_PLAYER_WANTED_LEVEL(player, PLAYER::GET_PLAYER_WANTED_LEVEL(player) - 1, 0);
+					PLAYER::SET_PLAYER_WANTED_LEVEL_NOW(player, 0);
+					set_status_text("wanted down");
+				}
+				break;
 				// switchable features
-				default:
-					if (lines[activeLineIndexPlayer].pState)
-						*lines[activeLineIndexPlayer].pState = !(*lines[activeLineIndexPlayer].pState);
-					if (lines[activeLineIndexPlayer].pUpdated)
-						*lines[activeLineIndexPlayer].pUpdated = true;					
+			default:
+				if (lines[activeLineIndexPlayer].pState)
+					*lines[activeLineIndexPlayer].pState = !(*lines[activeLineIndexPlayer].pState);
+				if (lines[activeLineIndexPlayer].pUpdated)
+					*lines[activeLineIndexPlayer].pUpdated = true;
 			}
 			waitTime = 200;
-		} else
-		if (bBack || trainer_switch_pressed())
-		{
-			menu_beep();
-			break;
-		} else
-		if (bUp)
-		{
-			menu_beep();
-			if (activeLineIndexPlayer == 0) 
-				activeLineIndexPlayer = lineCount;
-			activeLineIndexPlayer--;
-			waitTime = 150;
-		} else
-		if (bDown)
-		{
-			menu_beep();
-			activeLineIndexPlayer++;
-			if (activeLineIndexPlayer == lineCount) 
-				activeLineIndexPlayer = 0;			
-			waitTime = 150;
 		}
+		else
+			if (bBack || trainer_switch_pressed())
+			{
+				menu_beep();
+				break;
+			}
+			else
+				if (bUp)
+				{
+					menu_beep();
+					if (activeLineIndexPlayer == 0)
+						activeLineIndexPlayer = lineCount;
+					activeLineIndexPlayer--;
+					waitTime = 150;
+				}
+				else
+					if (bDown)
+					{
+						menu_beep();
+						activeLineIndexPlayer++;
+						if (activeLineIndexPlayer == lineCount)
+							activeLineIndexPlayer = 0;
+						waitTime = 150;
+					}
 	}
 }
 
@@ -1133,8 +1149,8 @@ void process_weapon_menu()
 	};
 
 	static LPCSTR weaponNames[] = {
-		"WEAPON_KNIFE", "WEAPON_NIGHTSTICK", "WEAPON_HAMMER", "WEAPON_BAT", "WEAPON_GOLFCLUB", "WEAPON_CROWBAR", 
-		"WEAPON_PISTOL", "WEAPON_COMBATPISTOL", "WEAPON_APPISTOL", "WEAPON_PISTOL50", "WEAPON_MICROSMG", "WEAPON_SMG", 
+		"WEAPON_KNIFE", "WEAPON_NIGHTSTICK", "WEAPON_HAMMER", "WEAPON_BAT", "WEAPON_GOLFCLUB", "WEAPON_CROWBAR",
+		"WEAPON_PISTOL", "WEAPON_COMBATPISTOL", "WEAPON_APPISTOL", "WEAPON_PISTOL50", "WEAPON_MICROSMG", "WEAPON_SMG",
 		"WEAPON_ASSAULTSMG", "WEAPON_ASSAULTRIFLE", "WEAPON_CARBINERIFLE", "WEAPON_ADVANCEDRIFLE", "WEAPON_MG",
 		"WEAPON_COMBATMG", "WEAPON_PUMPSHOTGUN", "WEAPON_SAWNOFFSHOTGUN", "WEAPON_ASSAULTSHOTGUN", "WEAPON_BULLPUPSHOTGUN",
 		"WEAPON_STUNGUN", "WEAPON_SNIPERRIFLE", "WEAPON_HEAVYSNIPER", "WEAPON_GRENADELAUNCHER", "WEAPON_GRENADELAUNCHER_SMOKE",
@@ -1151,16 +1167,16 @@ void process_weapon_menu()
 	{
 		// timed menu draw, used for pause after active line switch
 		DWORD maxTickCount = GetTickCount() + waitTime;
-		do 
+		do
 		{
 			// draw menu
 			draw_menu_line(caption, lineWidth, 15.0, 18.0, 0.0, 5.0, false, true);
 			for (int i = 0; i < lineCount; i++)
 				if (i != activeLineIndexWeapon)
-					draw_menu_line(line_as_str(lines[i].text, lines[i].pState), 
-								   lineWidth, 9.0, 60.0 + i * 36.0, 0.0, 9.0, false, false);
-			draw_menu_line(line_as_str(lines[activeLineIndexWeapon].text, lines[activeLineIndexWeapon].pState), 
-						   lineWidth + 1.0, 11.0, 56.0 + activeLineIndexWeapon * 36.0, 0.0, 7.0, true, false);
+					draw_menu_line(line_as_str(lines[i].text, lines[i].pState),
+						lineWidth, 9.0, 60.0 + i * 36.0, 0.0, 9.0, false, false);
+			draw_menu_line(line_as_str(lines[activeLineIndexWeapon].text, lines[activeLineIndexWeapon].pState),
+				lineWidth + 1.0, 11.0, 56.0 + activeLineIndexWeapon * 36.0, 0.0, 7.0, true, false);
 
 			update_features();
 			WAIT(0);
@@ -1181,41 +1197,44 @@ void process_weapon_menu()
 
 			switch (activeLineIndexWeapon)
 			{
-				case 0:
-					for (int i = 0; i < sizeof(weaponNames) / sizeof(weaponNames[0]); i++)
-						WEAPON::GIVE_DELAYED_WEAPON_TO_PED(playerPed, GAMEPLAY::GET_HASH_KEY((char *)weaponNames[i]), 1000, 0);
-					set_status_text("all weapon added");
-					break;
+			case 0:
+				for (int i = 0; i < sizeof(weaponNames) / sizeof(weaponNames[0]); i++)
+					WEAPON::GIVE_DELAYED_WEAPON_TO_PED(playerPed, GAMEPLAY::GET_HASH_KEY((char *)weaponNames[i]), 1000, 0);
+				set_status_text("all weapon added");
+				break;
 				// switchable features
-				default:
-					if (lines[activeLineIndexWeapon].pState)
-						*lines[activeLineIndexWeapon].pState = !(*lines[activeLineIndexWeapon].pState);
-					if (lines[activeLineIndexWeapon].pUpdated)
-						*lines[activeLineIndexWeapon].pUpdated = true;					
+			default:
+				if (lines[activeLineIndexWeapon].pState)
+					*lines[activeLineIndexWeapon].pState = !(*lines[activeLineIndexWeapon].pState);
+				if (lines[activeLineIndexWeapon].pUpdated)
+					*lines[activeLineIndexWeapon].pUpdated = true;
 			}
 			waitTime = 200;
-		} else
-		if (bBack || trainer_switch_pressed())
-		{
-			menu_beep();
-			break;
-		} else
-		if (bUp)
-		{
-			menu_beep();
-			if (activeLineIndexWeapon == 0) 
-				activeLineIndexWeapon = lineCount;
-			activeLineIndexWeapon--;
-			waitTime = 150;
-		} else
-		if (bDown)
-		{
-			menu_beep();
-			activeLineIndexWeapon++;
-			if (activeLineIndexWeapon == lineCount) 
-				activeLineIndexWeapon = 0;			
-			waitTime = 150;
 		}
+		else
+			if (bBack || trainer_switch_pressed())
+			{
+				menu_beep();
+				break;
+			}
+			else
+				if (bUp)
+				{
+					menu_beep();
+					if (activeLineIndexWeapon == 0)
+						activeLineIndexWeapon = lineCount;
+					activeLineIndexWeapon--;
+					waitTime = 150;
+				}
+				else
+					if (bDown)
+					{
+						menu_beep();
+						activeLineIndexWeapon++;
+						if (activeLineIndexWeapon == lineCount)
+							activeLineIndexWeapon = 0;
+						waitTime = 150;
+					}
 	}
 }
 
@@ -1256,7 +1275,7 @@ bool process_carspawn_menu()
 	{
 		// timed menu draw, used for pause after active line switch
 		DWORD maxTickCount = GetTickCount() + waitTime;
-		do 
+		do
 		{
 			// draw menu
 			char caption[32];
@@ -1275,7 +1294,7 @@ bool process_carspawn_menu()
 
 		bool bSelect, bBack, bUp, bDown, bLeft, bRight;
 		get_button_state(&bSelect, &bBack, &bUp, &bDown, &bLeft, &bRight);
-		
+
 		if (bSelect)
 		{
 			menu_beep();
@@ -1283,7 +1302,7 @@ bool process_carspawn_menu()
 			DWORD model = GAMEPLAY::GET_HASH_KEY((char *)modelName);
 			if (STREAMING::IS_MODEL_IN_CDIMAGE(model) && STREAMING::IS_MODEL_A_VEHICLE(model))
 			{
-				STREAMING::REQUEST_MODEL(model);				
+				STREAMING::REQUEST_MODEL(model);
 				while (!STREAMING::HAS_MODEL_LOADED(model)) WAIT(0);
 				Vector3 coords = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER::PLAYER_PED_ID(), 0.0, 5.0, 0.0);
 				Vehicle veh = VEHICLE::CREATE_VEHICLE(model, coords.x, coords.y, coords.z, 0.0, 1, 1);
@@ -1305,45 +1324,50 @@ bool process_carspawn_menu()
 
 				return true;
 			}
-		} else
-		if (bBack)
-		{
-			menu_beep();
-			break;
-		} else
-		if (bRight)
-		{
-			menu_beep();
-			carspawnActiveItemIndex++;
-			int itemsMax = (carspawnActiveLineIndex == (lineCount - 1)) ? itemCountLastLine : itemCount;
-			if (carspawnActiveItemIndex == itemsMax) 
-				carspawnActiveItemIndex = 0;			
-			waitTime = 100;
-		} else
-		if (bLeft)
-		{
-			menu_beep();
-			if (carspawnActiveItemIndex == 0) 
-				carspawnActiveItemIndex = (carspawnActiveLineIndex == (lineCount - 1)) ? itemCountLastLine : itemCount;
-			carspawnActiveItemIndex--;
-			waitTime = 100;
-		} else
-		if (bUp)
-		{
-			menu_beep();
-			if (carspawnActiveLineIndex == 0) 
-				carspawnActiveLineIndex = lineCount;
-			carspawnActiveLineIndex--;
-			waitTime = 200;
-		} else
-		if (bDown)
-		{
-			menu_beep();
-			carspawnActiveLineIndex++;
-			if (carspawnActiveLineIndex == lineCount) 
-				carspawnActiveLineIndex = 0;			
-			waitTime = 200;
 		}
+		else
+			if (bBack)
+			{
+				menu_beep();
+				break;
+			}
+			else
+				if (bRight)
+				{
+					menu_beep();
+					carspawnActiveItemIndex++;
+					int itemsMax = (carspawnActiveLineIndex == (lineCount - 1)) ? itemCountLastLine : itemCount;
+					if (carspawnActiveItemIndex == itemsMax)
+						carspawnActiveItemIndex = 0;
+					waitTime = 100;
+				}
+				else
+					if (bLeft)
+					{
+						menu_beep();
+						if (carspawnActiveItemIndex == 0)
+							carspawnActiveItemIndex = (carspawnActiveLineIndex == (lineCount - 1)) ? itemCountLastLine : itemCount;
+						carspawnActiveItemIndex--;
+						waitTime = 100;
+					}
+					else
+						if (bUp)
+						{
+							menu_beep();
+							if (carspawnActiveLineIndex == 0)
+								carspawnActiveLineIndex = lineCount;
+							carspawnActiveLineIndex--;
+							waitTime = 200;
+						}
+						else
+							if (bDown)
+							{
+								menu_beep();
+								carspawnActiveLineIndex++;
+								if (carspawnActiveLineIndex == lineCount)
+									carspawnActiveLineIndex = 0;
+								waitTime = 200;
+							}
 		if (carspawnActiveLineIndex == (lineCount - 1))
 			if (carspawnActiveItemIndex >= itemCountLastLine)
 				carspawnActiveItemIndex = 0;
@@ -1372,7 +1396,7 @@ void process_veh_menu()
 		{"WRAP IN SPAWNED",	&featureVehWrapInSpawned, NULL},
 		{"INVINCIBLE",		&featureVehInvincible, &featureVehInvincibleUpdated},
 		{"STRONG WHEELS",	&featureVehInvincibleWheels, &featureVehInvincibleWheelsUpdated},
-		{"SPEED BOOST",		&featureVehSpeedBoost, NULL}		
+		{"SPEED BOOST",		&featureVehSpeedBoost, NULL}
 	};
 
 	DWORD waitTime = 150;
@@ -1380,16 +1404,16 @@ void process_veh_menu()
 	{
 		// timed menu draw, used for pause after active line switch
 		DWORD maxTickCount = GetTickCount() + waitTime;
-		do 
+		do
 		{
 			// draw menu
 			draw_menu_line(caption, lineWidth, 15.0, 18.0, 0.0, 5.0, false, true);
 			for (int i = 0; i < lineCount; i++)
 				if (i != activeLineIndexVeh)
-					draw_menu_line(line_as_str(lines[i].text, lines[i].pState), 
-								   lineWidth, 9.0, 60.0 + i * 36.0, 0.0, 9.0, false, false);
-			draw_menu_line(line_as_str(lines[activeLineIndexVeh].text, lines[activeLineIndexVeh].pState), 
-						   lineWidth + 1.0, 11.0, 56.0 + activeLineIndexVeh * 36.0, 0.0, 7.0, true, false);
+					draw_menu_line(line_as_str(lines[i].text, lines[i].pState),
+						lineWidth, 9.0, 60.0 + i * 36.0, 0.0, 9.0, false, false);
+			draw_menu_line(line_as_str(lines[activeLineIndexVeh].text, lines[activeLineIndexVeh].pState),
+				lineWidth + 1.0, 11.0, 56.0 + activeLineIndexVeh * 36.0, 0.0, 7.0, true, false);
 
 			update_features();
 			WAIT(0);
@@ -1410,61 +1434,65 @@ void process_veh_menu()
 
 			switch (activeLineIndexVeh)
 			{
-				case 0:
-					if (process_carspawn_menu()) return;				
-					break;
-				case 1:
-					if (bPlayerExists) 
+			case 0:
+				if (process_carspawn_menu()) return;
+				break;
+			case 1:
+				if (bPlayerExists)
+				{
+					if (PED::IS_PED_IN_ANY_VEHICLE(playerPed, 0))
 					{
-						if (PED::IS_PED_IN_ANY_VEHICLE(playerPed, 0))
-						{
-							Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(playerPed);
-							VEHICLE::SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(veh, rand() % 255, rand() % 255, rand() % 255);
-							if (VEHICLE::GET_IS_VEHICLE_PRIMARY_COLOUR_CUSTOM(veh))
-								VEHICLE::SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(veh, rand() % 255, rand() % 255, rand() % 255);
-						} else
-						{
-							set_status_text("player isn't in a vehicle");
-						}
+						Vehicle veh = PED::GET_VEHICLE_PED_IS_USING(playerPed);
+						VEHICLE::SET_VEHICLE_CUSTOM_PRIMARY_COLOUR(veh, rand() % 255, rand() % 255, rand() % 255);
+						if (VEHICLE::GET_IS_VEHICLE_PRIMARY_COLOUR_CUSTOM(veh))
+							VEHICLE::SET_VEHICLE_CUSTOM_SECONDARY_COLOUR(veh, rand() % 255, rand() % 255, rand() % 255);
 					}
-					break;
-				case 2:
-					if (bPlayerExists) 
-						if (PED::IS_PED_IN_ANY_VEHICLE(playerPed, 0))
-							VEHICLE::SET_VEHICLE_FIXED(PED::GET_VEHICLE_PED_IS_USING(playerPed));
-						else
-							set_status_text("player isn't in a vehicle");
-					break;
+					else
+					{
+						set_status_text("player isn't in a vehicle");
+					}
+				}
+				break;
+			case 2:
+				if (bPlayerExists)
+					if (PED::IS_PED_IN_ANY_VEHICLE(playerPed, 0))
+						VEHICLE::SET_VEHICLE_FIXED(PED::GET_VEHICLE_PED_IS_USING(playerPed));
+					else
+						set_status_text("player isn't in a vehicle");
+				break;
 				// switchable features
-				default:
-					if (lines[activeLineIndexVeh].pState)
-						*lines[activeLineIndexVeh].pState = !(*lines[activeLineIndexVeh].pState);
-					if (lines[activeLineIndexVeh].pUpdated)
-						*lines[activeLineIndexVeh].pUpdated = true;					
+			default:
+				if (lines[activeLineIndexVeh].pState)
+					*lines[activeLineIndexVeh].pState = !(*lines[activeLineIndexVeh].pState);
+				if (lines[activeLineIndexVeh].pUpdated)
+					*lines[activeLineIndexVeh].pUpdated = true;
 			}
 			waitTime = 200;
-		} else
-		if (bBack || trainer_switch_pressed())
-		{
-			menu_beep();
-			break;
-		} else
-		if (bUp)
-		{
-			menu_beep();
-			if (activeLineIndexVeh == 0) 
-				activeLineIndexVeh = lineCount;
-			activeLineIndexVeh--;
-			waitTime = 150;
-		} else
-		if (bDown)
-		{
-			menu_beep();
-			activeLineIndexVeh++;
-			if (activeLineIndexVeh == lineCount) 
-				activeLineIndexVeh = 0;			
-			waitTime = 150;
 		}
+		else
+			if (bBack || trainer_switch_pressed())
+			{
+				menu_beep();
+				break;
+			}
+			else
+				if (bUp)
+				{
+					menu_beep();
+					if (activeLineIndexVeh == 0)
+						activeLineIndexVeh = lineCount;
+					activeLineIndexVeh--;
+					waitTime = 150;
+				}
+				else
+					if (bDown)
+					{
+						menu_beep();
+						activeLineIndexVeh++;
+						if (activeLineIndexVeh == lineCount)
+							activeLineIndexVeh = 0;
+						waitTime = 150;
+					}
 	}
 }
 
@@ -1494,15 +1522,15 @@ void process_world_menu()
 	{
 		// timed menu draw, used for pause after active line switch
 		DWORD maxTickCount = GetTickCount() + waitTime;
-		do 
+		do
 		{
 			// draw menu
 			draw_menu_line(caption, lineWidth, 15.0, 18.0, 0.0, 5.0, false, true);
 			for (int i = 0; i < lineCount; i++)
 				if (i != activeLineIndexWorld)
-					draw_menu_line(line_as_str(lines[i].text, lines[i].pState), 
-					lineWidth, 9.0, 60.0 + i * 36.0, 0.0, 9.0, false, false);
-			draw_menu_line(line_as_str(lines[activeLineIndexWorld].text, lines[activeLineIndexWorld].pState), 
+					draw_menu_line(line_as_str(lines[i].text, lines[i].pState),
+						lineWidth, 9.0, 60.0 + i * 36.0, 0.0, 9.0, false, false);
+			draw_menu_line(line_as_str(lines[activeLineIndexWorld].text, lines[activeLineIndexWorld].pState),
 				lineWidth + 1.0, 11.0, 56.0 + activeLineIndexWorld * 36.0, 0.0, 7.0, true, false);
 
 			update_features();
@@ -1518,50 +1546,53 @@ void process_world_menu()
 			menu_beep();
 			switch (activeLineIndexWorld)
 			{
-				case 0: 
-					featureWorldMoonGravity = !featureWorldMoonGravity;
-					GAMEPLAY::SET_GRAVITY_LEVEL(featureWorldMoonGravity ? 2 : 0);
-					break;
-				case 1: 
-					// featureWorldRandomCops being set in update_features
-					PED::SET_CREATE_RANDOM_COPS(!featureWorldRandomCops);
-					break;
-				case 2:
-					featureWorldRandomTrains = !featureWorldRandomTrains;
-					VEHICLE::SET_RANDOM_TRAINS(featureWorldRandomTrains);
-					break;
-				case 3:
-					featureWorldRandomBoats = !featureWorldRandomBoats;
-					VEHICLE::SET_RANDOM_BOATS(featureWorldRandomBoats);
-					break;
-				case 4:
-					featureWorldGarbageTrucks = !featureWorldGarbageTrucks;
-					VEHICLE::SET_GARBAGE_TRUCKS(featureWorldGarbageTrucks);
-					break;
+			case 0:
+				featureWorldMoonGravity = !featureWorldMoonGravity;
+				GAMEPLAY::SET_GRAVITY_LEVEL(featureWorldMoonGravity ? 2 : 0);
+				break;
+			case 1:
+				// featureWorldRandomCops being set in update_features
+				PED::SET_CREATE_RANDOM_COPS(!featureWorldRandomCops);
+				break;
+			case 2:
+				featureWorldRandomTrains = !featureWorldRandomTrains;
+				VEHICLE::SET_RANDOM_TRAINS(featureWorldRandomTrains);
+				break;
+			case 3:
+				featureWorldRandomBoats = !featureWorldRandomBoats;
+				VEHICLE::SET_RANDOM_BOATS(featureWorldRandomBoats);
+				break;
+			case 4:
+				featureWorldGarbageTrucks = !featureWorldGarbageTrucks;
+				VEHICLE::SET_GARBAGE_TRUCKS(featureWorldGarbageTrucks);
+				break;
 			}
 			waitTime = 200;
-		} else
-		if (bBack || trainer_switch_pressed())
-		{
-			menu_beep();
-			break;
-		} else
-		if (bUp)
-		{
-			menu_beep();
-			if (activeLineIndexWorld == 0) 
-				activeLineIndexWorld = lineCount;
-			activeLineIndexWorld--;
-			waitTime = 150;
-		} else
-		if (bDown)
-		{
-			menu_beep();
-			activeLineIndexWorld++;
-			if (activeLineIndexWorld == lineCount) 
-				activeLineIndexWorld = 0;			
-			waitTime = 150;
 		}
+		else
+			if (bBack || trainer_switch_pressed())
+			{
+				menu_beep();
+				break;
+			}
+			else
+				if (bUp)
+				{
+					menu_beep();
+					if (activeLineIndexWorld == 0)
+						activeLineIndexWorld = lineCount;
+					activeLineIndexWorld--;
+					waitTime = 150;
+				}
+				else
+					if (bDown)
+					{
+						menu_beep();
+						activeLineIndexWorld++;
+						if (activeLineIndexWorld == lineCount)
+							activeLineIndexWorld = 0;
+						waitTime = 150;
+					}
 	}
 }
 
@@ -1590,15 +1621,15 @@ void process_time_menu()
 	{
 		// timed menu draw, used for pause after active line switch
 		DWORD maxTickCount = GetTickCount() + waitTime;
-		do 
+		do
 		{
 			// draw menu
 			draw_menu_line(caption, lineWidth, 15.0, 18.0, 0.0, 5.0, false, true);
 			for (int i = 0; i < lineCount; i++)
 				if (i != activeLineIndexTime)
-					draw_menu_line(line_as_str(lines[i].text, lines[i].pState), 
-					lineWidth, 9.0, 60.0 + i * 36.0, 0.0, 9.0, false, false);
-			draw_menu_line(line_as_str(lines[activeLineIndexTime].text, lines[activeLineIndexTime].pState), 
+					draw_menu_line(line_as_str(lines[i].text, lines[i].pState),
+						lineWidth, 9.0, 60.0 + i * 36.0, 0.0, 9.0, false, false);
+			draw_menu_line(line_as_str(lines[activeLineIndexTime].text, lines[activeLineIndexTime].pState),
 				lineWidth + 1.0, 11.0, 56.0 + activeLineIndexTime * 36.0, 0.0, 7.0, true, false);
 
 			update_features();
@@ -1614,49 +1645,52 @@ void process_time_menu()
 			menu_beep();
 			switch (activeLineIndexTime)
 			{
-			// hour forward/backward
-			case 0: 
+				// hour forward/backward
+			case 0:
 			case 1:
-				{
-					int h = TIME::GET_CLOCK_HOURS();
-					if (activeLineIndexTime == 0) h = (h == 23) ? 0 : h + 1; else h = (h == 0) ? 23 : h - 1;
-					int m = TIME::GET_CLOCK_MINUTES();
-					TIME::SET_CLOCK_TIME(h, m, 0);
-					char text[32];
-					sprintf_s(text, "time %d:%d", h, m);
-					set_status_text(text);
-				}
-				break;
+			{
+				int h = TIME::GET_CLOCK_HOURS();
+				if (activeLineIndexTime == 0) h = (h == 23) ? 0 : h + 1; else h = (h == 0) ? 23 : h - 1;
+				int m = TIME::GET_CLOCK_MINUTES();
+				TIME::SET_CLOCK_TIME(h, m, 0);
+				char text[32];
+				sprintf_s(text, "time %d:%d", h, m);
+				set_status_text(text);
+			}
+			break;
 			// switchable features
 			default:
 				if (lines[activeLineIndexTime].pState)
 					*lines[activeLineIndexTime].pState = !(*lines[activeLineIndexTime].pState);
 				if (lines[activeLineIndexTime].pUpdated)
-					*lines[activeLineIndexTime].pUpdated = true;	
+					*lines[activeLineIndexTime].pUpdated = true;
 			}
 			waitTime = 200;
-		} else
-		if (bBack || trainer_switch_pressed())
-		{
-			menu_beep();
-			break;
-		} else
-		if (bUp)
-		{
-			menu_beep();
-			if (activeLineIndexTime == 0) 
-				activeLineIndexTime = lineCount;
-			activeLineIndexTime--;
-			waitTime = 150;
-		} else
-		if (bDown)
-		{
-			menu_beep();
-			activeLineIndexTime++;
-			if (activeLineIndexTime == lineCount) 
-				activeLineIndexTime = 0;			
-			waitTime = 150;
 		}
+		else
+			if (bBack || trainer_switch_pressed())
+			{
+				menu_beep();
+				break;
+			}
+			else
+				if (bUp)
+				{
+					menu_beep();
+					if (activeLineIndexTime == 0)
+						activeLineIndexTime = lineCount;
+					activeLineIndexTime--;
+					waitTime = 150;
+				}
+				else
+					if (bDown)
+					{
+						menu_beep();
+						activeLineIndexTime++;
+						if (activeLineIndexTime == lineCount)
+							activeLineIndexTime = 0;
+						waitTime = 150;
+					}
 	}
 }
 
@@ -1698,15 +1732,15 @@ void process_weather_menu()
 	{
 		// timed menu draw, used for pause after active line switch
 		DWORD maxTickCount = GetTickCount() + waitTime;
-		do 
+		do
 		{
 			// draw menu
 			draw_menu_line(caption, lineWidth, 15.0, 18.0, 0.0, 5.0, false, true);
 			for (int i = 0; i < lineCount; i++)
 				if (i != activeLineIndexWeather)
-					draw_menu_line(line_as_str(lines[i].text, lines[i].pState), 
-					lineWidth, 9.0, 60.0 + i * 36.0, 0.0, 9.0, false, false);
-			draw_menu_line(line_as_str(lines[activeLineIndexWeather].text, lines[activeLineIndexWeather].pState), 
+					draw_menu_line(line_as_str(lines[i].text, lines[i].pState),
+						lineWidth, 9.0, 60.0 + i * 36.0, 0.0, 9.0, false, false);
+			draw_menu_line(line_as_str(lines[activeLineIndexWeather].text, lines[activeLineIndexWeather].pState),
 				lineWidth + 1.0, 11.0, 56.0 + activeLineIndexWeather * 36.0, 0.0, 7.0, true, false);
 
 			update_features();
@@ -1722,25 +1756,26 @@ void process_weather_menu()
 			menu_beep();
 			switch (activeLineIndexWeather)
 			{
-			// wind
-			case 0: 
+				// wind
+			case 0:
 				featureWeatherWind = !featureWeatherWind;
 				if (featureWeatherWind)
 				{
 					GAMEPLAY::SET_WIND(1.0);
 					GAMEPLAY::SET_WIND_SPEED(11.99);
 					GAMEPLAY::SET_WIND_DIRECTION(ENTITY::GET_ENTITY_HEADING(PLAYER::PLAYER_PED_ID()));
-				} else
+				}
+				else
 				{
 					GAMEPLAY::SET_WIND(0.0);
 					GAMEPLAY::SET_WIND_SPEED(0.0);
 				}
 				break;
-			// set persist
+				// set persist
 			case 1:
 				featureWeatherPers = !featureWeatherPers;
 				break;
-			// set weather
+				// set weather
 			default:
 				GAMEPLAY::CLEAR_OVERRIDE_WEATHER();
 				if (featureWeatherPers)
@@ -1751,32 +1786,35 @@ void process_weather_menu()
 				{
 					GAMEPLAY::SET_WEATHER_TYPE_NOW_PERSIST((char *)lines[activeLineIndexWeather].text);
 					GAMEPLAY::CLEAR_WEATHER_TYPE_PERSIST();
-				}				
+				}
 				set_status_text(lines[activeLineIndexWeather].text);
 			}
 			waitTime = 200;
-		} else
-		if (bBack || trainer_switch_pressed())
-		{
-			menu_beep();
-			break;
-		} else
-		if (bUp)
-		{
-			menu_beep();
-			if (activeLineIndexWeather == 0) 
-				activeLineIndexWeather = lineCount;
-			activeLineIndexWeather--;
-			waitTime = 150;
-		} else
-		if (bDown)
-		{
-			menu_beep();
-			activeLineIndexWeather++;
-			if (activeLineIndexWeather == lineCount) 
-				activeLineIndexWeather = 0;			
-			waitTime = 150;
 		}
+		else
+			if (bBack || trainer_switch_pressed())
+			{
+				menu_beep();
+				break;
+			}
+			else
+				if (bUp)
+				{
+					menu_beep();
+					if (activeLineIndexWeather == 0)
+						activeLineIndexWeather = lineCount;
+					activeLineIndexWeather--;
+					waitTime = 150;
+				}
+				else
+					if (bDown)
+					{
+						menu_beep();
+						activeLineIndexWeather++;
+						if (activeLineIndexWeather == lineCount)
+							activeLineIndexWeather = 0;
+						waitTime = 150;
+					}
 	}
 }
 
@@ -1876,7 +1914,7 @@ int activeLineIndexMain = 0;
 void process_main_menu()
 {
 	const float lineWidth = 250.0;
-	const int lineCount = 7;	
+	const int lineCount = 7;
 
 	std::string caption = "NATIVE  TRAINER  (AB)";
 
@@ -1895,7 +1933,7 @@ void process_main_menu()
 	{
 		// timed menu draw, used for pause after active line switch
 		DWORD maxTickCount = GetTickCount() + waitTime;
-		do 
+		do
 		{
 			// draw menu
 			draw_menu_line(caption, lineWidth, 15.0, 18.0, 0.0, 5.0, false, true);
@@ -1903,7 +1941,7 @@ void process_main_menu()
 				if (i != activeLineIndexMain)
 					draw_menu_line(lineCaption[i], lineWidth, 9.0, 60.0 + i * 36.0, 0.0, 9.0, false, false);
 			draw_menu_line(lineCaption[activeLineIndexMain], lineWidth + 1.0, 11.0, 56.0 + activeLineIndexMain * 36.0, 0.0, 7.0, true, false);
-			
+
 			update_features();
 			WAIT(0);
 		} while (GetTickCount() < maxTickCount);
@@ -1917,118 +1955,121 @@ void process_main_menu()
 			menu_beep();
 			switch (activeLineIndexMain)
 			{
-				case 0:
-					process_player_menu();					
-					break;
-				case 1:
-					process_weapon_menu();
-					break;
-				case 2:
-					process_veh_menu();
-					break;
-				case 3:
-					process_world_menu();
-					break;
-				case 4:
-					process_time_menu();
-					break;
-				case 5:
-					process_weather_menu();
-					break;
-				case 6:
-					featurePlayerInvincible = true; featurePlayerInvincibleUpdated = true;
-					featurePlayerNeverWanted = true;
-					featureWeaponNoReload = true;
-					featureVehInvincible = true; featureVehInvincibleUpdated = true;
-					featureVehWrapInSpawned = true;
-					featureVehSpeedBoost = true;
-					break;
+			case 0:
+				process_player_menu();
+				break;
+			case 1:
+				process_weapon_menu();
+				break;
+			case 2:
+				process_veh_menu();
+				break;
+			case 3:
+				process_world_menu();
+				break;
+			case 4:
+				process_time_menu();
+				break;
+			case 5:
+				process_weather_menu();
+				break;
+			case 6:
+				featurePlayerInvincible = true; featurePlayerInvincibleUpdated = true;
+				featurePlayerNeverWanted = true;
+				featureWeaponNoReload = true;
+				featureVehInvincible = true; featureVehInvincibleUpdated = true;
+				featureVehWrapInSpawned = true;
+				featureVehSpeedBoost = true;
+				break;
 			}
 			waitTime = 200;
-		} else
-		if (bBack || trainer_switch_pressed())
-		{
-			menu_beep();
-			break;
-		} else
-		if (bUp)
-		{
-			menu_beep();
-			if (activeLineIndexMain == 0) 
-				activeLineIndexMain = lineCount;
-			activeLineIndexMain--;
-			waitTime = 150;
-		} else
-		if (bDown)
-		{
-			menu_beep();
-			activeLineIndexMain++;
-			if (activeLineIndexMain == lineCount) 
-				activeLineIndexMain = 0;			
-			waitTime = 150;
 		}
+		else
+			if (bBack || trainer_switch_pressed())
+			{
+				menu_beep();
+				break;
+			}
+			else
+				if (bUp)
+				{
+					menu_beep();
+					if (activeLineIndexMain == 0)
+						activeLineIndexMain = lineCount;
+					activeLineIndexMain--;
+					waitTime = 150;
+				}
+				else
+					if (bDown)
+					{
+						menu_beep();
+						activeLineIndexMain++;
+						if (activeLineIndexMain == lineCount)
+							activeLineIndexMain = 0;
+						waitTime = 150;
+					}
 	}
 }
 
 void reset_globals()
 {
-	activeLineIndexMain			=
-	activeLineIndexPlayer		=
-	skinchangerActiveLineIndex	=
-	skinchangerActiveItemIndex	=
-	teleportActiveLineIndex		=
-	activeLineIndexWeapon		=
-	activeLineIndexVeh			=
-	carspawnActiveLineIndex		=
-	carspawnActiveItemIndex		=
-	activeLineIndexWorld		=
-	activeLineIndexWeather		=	0;
+	activeLineIndexMain =
+		activeLineIndexPlayer =
+		skinchangerActiveLineIndex =
+		skinchangerActiveItemIndex =
+		teleportActiveLineIndex =
+		activeLineIndexWeapon =
+		activeLineIndexVeh =
+		carspawnActiveLineIndex =
+		carspawnActiveItemIndex =
+		activeLineIndexWorld =
+		activeLineIndexWeather = 0;
 
-	featurePlayerInvincible				=
-	featurePlayerInvincibleUpdated		=
-	featurePlayerNeverWanted			=
-	featurePlayerIgnored				=
-	featurePlayerIgnoredUpdated			=
-	featurePlayerUnlimitedAbility		=
-	featurePlayerNoNoise				=
-	featurePlayerNoNoiseUpdated			=
-	featurePlayerFastSwim				=
-	featurePlayerFastSwimUpdated		=
-	featurePlayerFastRun				=
-	featurePlayerFastRunUpdated			=
-	featurePlayerSuperJump				=
-	featureWeaponNoReload				=
-	featureWeaponFireAmmo				=
-	featureWeaponExplosiveAmmo			=
-	featureWeaponExplosiveMelee			=
-	featureWeaponVehRockets				=
-	featureVehInvincible				=
-	featureVehInvincibleUpdated			=
-	featureVehInvincibleWheels			=
-	featureVehInvincibleWheelsUpdated	=
-	featureVehSeatbelt					=
-	featureVehSeatbeltUpdated			=
-	featureVehSpeedBoost				=
-	featureVehWrapInSpawned				=
-	featureWorldMoonGravity				=
-	featureTimePaused					=
-	featureTimePausedUpdated			=
-	featureTimeSynced					=
-	featureWeatherWind					=
-	featureWeatherPers					=
-	featureMiscLockRadio				=
-	featureMiscHideHud					=	false;
+	featurePlayerInvincible =
+		featurePlayerInvincibleUpdated =
+		featurePlayerNeverWanted =
+		featurePlayerIgnored =
+		featurePlayerIgnoredUpdated =
+		featurePlayerUnlimitedAbility =
+		featurePlayerNoNoise =
+		featurePlayerNoNoiseUpdated =
+		featurePlayerFastSwim =
+		featurePlayerFastSwimUpdated =
+		featurePlayerFastRun =
+		featurePlayerFastRunUpdated =
+		featurePlayerSuperJump =
+		featureWeaponNoReload =
+		featureWeaponFireAmmo =
+		featureWeaponExplosiveAmmo =
+		featureWeaponExplosiveMelee =
+		featureWeaponVehRockets =
+		featureVehInvincible =
+		featureVehInvincibleUpdated =
+		featureVehInvincibleWheels =
+		featureVehInvincibleWheelsUpdated =
+		featureVehSeatbelt =
+		featureVehSeatbeltUpdated =
+		featureVehSpeedBoost =
+		featureVehWrapInSpawned =
+		featureWorldMoonGravity =
+		featureTimePaused =
+		featureTimePausedUpdated =
+		featureTimeSynced =
+		featureWeatherWind =
+		featureWeatherPers =
+		featureMiscLockRadio =
+		featureMiscHideHud = false;
 
-	featureWorldRandomCops		=
-	featureWorldRandomTrains	=
-	featureWorldRandomBoats		=
-	featureWorldGarbageTrucks	=	true;
+	featureWorldRandomCops =
+		featureWorldRandomTrains =
+		featureWorldRandomBoats =
+		featureWorldGarbageTrucks = true;
 
-	skinchanger_used			=	false;
+	skinchanger_used = false;
 }
 
 void main()
-{	
+{
 	reset_globals();
 
 	while (true)
@@ -2038,8 +2079,121 @@ void main()
 			menu_beep();
 			process_main_menu();
 		}
+		else if (IsKeyJustUp(VK_F5)) //Teleport to marker
+		{
+			menu_beep();
 
-		update_features();		
+			// get entity to teleport
+			Entity e = PLAYER::PLAYER_PED_ID();
+			if (PED::IS_PED_IN_ANY_VEHICLE(e, 0))
+				e = PED::GET_VEHICLE_PED_IS_USING(e);
+
+			// get coords
+			Vector3 coords;
+			bool success = false;
+
+			bool blipFound = false;
+			// search for marker blip
+			int blipIterator = UI::_GET_BLIP_INFO_ID_ITERATOR();
+			for (Blip i = UI::GET_FIRST_BLIP_INFO_ID(blipIterator); UI::DOES_BLIP_EXIST(i) != 0; i = UI::GET_NEXT_BLIP_INFO_ID(blipIterator))
+			{
+				if (UI::GET_BLIP_INFO_ID_TYPE(i) == 4)
+				{
+					coords = UI::GET_BLIP_INFO_ID_COORD(i);
+					blipFound = true;
+					break;
+				}
+			}
+			if (blipFound)
+			{
+				// load needed map region and check height levels for ground existence
+				bool groundFound = false;
+				static float groundCheckHeight[] = {
+					100.0, 150.0, 50.0, 0.0, 200.0, 250.0, 300.0, 350.0, 400.0,
+					450.0, 500.0, 550.0, 600.0, 650.0, 700.0, 750.0, 800.0
+				};
+				for (int i = 0; i < sizeof(groundCheckHeight) / sizeof(float); i++)
+				{
+					ENTITY::SET_ENTITY_COORDS_NO_OFFSET(e, coords.x, coords.y, groundCheckHeight[i], 0, 0, 1);
+					WAIT(100);
+					if (GAMEPLAY::GET_GROUND_Z_FOR_3D_COORD(coords.x, coords.y, groundCheckHeight[i], &coords.z))
+					{
+						groundFound = true;
+						coords.z += 3.0;
+						break;
+					}
+				}
+				// if ground not found then set Z in air and give player a parachute
+				if (!groundFound)
+				{
+					coords.z = 1000.0;
+					WEAPON::GIVE_DELAYED_WEAPON_TO_PED(PLAYER::PLAYER_PED_ID(), 0xFBAB5776, 1, 0);
+				}
+				success = true;
+			}
+			else
+			{
+				set_status_text("map marker isn't set");
+			}
+
+			// set player pos
+			if (success)
+			{
+				ENTITY::SET_ENTITY_COORDS_NO_OFFSET(e, coords.x, coords.y, coords.z, 0, 0, 1);
+				WAIT(0);
+				set_status_text("teleported");
+			}
+		}
+		else if (IsKeyJustUp(VK_F6))
+		{
+			menu_beep();
+			LPCSTR modelName = "EXEMPLAR";
+			DWORD model = GAMEPLAY::GET_HASH_KEY((char *)modelName);
+			if (STREAMING::IS_MODEL_IN_CDIMAGE(model) && STREAMING::IS_MODEL_A_VEHICLE(model))
+			{
+				STREAMING::REQUEST_MODEL(model);
+				while (!STREAMING::HAS_MODEL_LOADED(model)) WAIT(0);
+				Vector3 coords = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER::PLAYER_PED_ID(), 0.0, 5.0, 0.0);
+				Vehicle veh = VEHICLE::CREATE_VEHICLE(model, coords.x, coords.y, coords.z, 0.0, 1, 1);
+				VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(veh);
+
+				if (featureVehWrapInSpawned)
+				{
+					ENTITY::SET_ENTITY_HEADING(veh, ENTITY::GET_ENTITY_HEADING(PLAYER::PLAYER_PED_ID()));
+					PED::SET_PED_INTO_VEHICLE(PLAYER::PLAYER_PED_ID(), veh, -1);
+				}
+
+				WAIT(0);
+				STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(model);
+				ENTITY::SET_VEHICLE_AS_NO_LONGER_NEEDED(&veh);
+			}
+		}
+		else if (IsKeyJustUp(VK_F7))
+		{
+			menu_beep();
+			LPCSTR modelName = "LAZER";
+			DWORD model = GAMEPLAY::GET_HASH_KEY((char *)modelName);
+			if (STREAMING::IS_MODEL_IN_CDIMAGE(model) && STREAMING::IS_MODEL_A_VEHICLE(model))
+			{
+				STREAMING::REQUEST_MODEL(model);
+				while (!STREAMING::HAS_MODEL_LOADED(model)) WAIT(0);
+				Vector3 coords = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER::PLAYER_PED_ID(), 0.0, 5.0, 0.0);
+				Vehicle veh = VEHICLE::CREATE_VEHICLE(model, coords.x, coords.y, coords.z, 0.0, 1, 1);
+				VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(veh);
+
+				if (featureVehWrapInSpawned)
+				{
+					ENTITY::SET_ENTITY_HEADING(veh, ENTITY::GET_ENTITY_HEADING(PLAYER::PLAYER_PED_ID()));
+					PED::SET_PED_INTO_VEHICLE(PLAYER::PLAYER_PED_ID(), veh, -1);
+				}
+
+				WAIT(0);
+				STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(model);
+				ENTITY::SET_VEHICLE_AS_NO_LONGER_NEEDED(&veh);
+			}
+		}
+
+		update_features();
 		WAIT(0);
 	}
 }
