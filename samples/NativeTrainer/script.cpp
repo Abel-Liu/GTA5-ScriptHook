@@ -1975,11 +1975,11 @@ void process_main_menu()
 				break;
 			case 6:
 				featurePlayerInvincible = true; featurePlayerInvincibleUpdated = true;
-				featurePlayerNeverWanted = true;
 				featureWeaponNoReload = true;
 				featureVehInvincible = true; featureVehInvincibleUpdated = true;
 				featureVehWrapInSpawned = true;
 				featureVehSpeedBoost = true;
+				featureVehSeatbelt = true; featureVehSeatbeltUpdated = true;
 				break;
 			}
 			waitTime = 200;

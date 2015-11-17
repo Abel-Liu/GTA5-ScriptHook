@@ -16,4 +16,4 @@ Support Traditional Chinese
 
 Use I/K/J/L/Return to select menu if without keypad
 
-Add "ONEKEY" menu to enable "user invincible"  "vehicle invincible"  "never wanted"  "no reload" one time
+Add "ONEKEY" menu to enable "user invincible"  "vehicle invincible"  "no reload" one time
