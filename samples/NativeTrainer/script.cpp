@@ -1976,7 +1976,6 @@ void process_main_menu()
 			case 6:
 				featurePlayerInvincible = true; featurePlayerInvincibleUpdated = true;
 				featureWeaponNoReload = true;
-				featureVehInvincible = true; featureVehInvincibleUpdated = true;
 				featureVehWrapInSpawned = true;
 				featureVehSpeedBoost = true;
 				featureVehSeatbelt = true; featureVehSeatbeltUpdated = true;
