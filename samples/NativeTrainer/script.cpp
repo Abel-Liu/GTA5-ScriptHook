@@ -1238,26 +1238,28 @@ void process_weapon_menu()
 	}
 }
 
-const int vehicleLineCount = 6;
+const int vehicleLineCount = 7;
 const int vehicleItemCount = 10;
-const int vehicleLastLineCount = 5;
+const int vehicleLastLineCount = 6;
 
 LPCSTR vehicleModels[vehicleLineCount][vehicleItemCount] = {
-	{ "SUPERD", "EXEMPLAR", "FQ2", "BUFFALO2", "BLAZER3", "POLICE2", "COQUETTE", "GRESLEY", "HOTKNIFE", "BANSHEE" },//轿车
+	{ "ZENTORNO", "EXEMPLAR", "FQ2", "BUFFALO2", "BLAZER3", "POLICE2", "FBI2", "GRESLEY", "HOTKNIFE", "BANSHEE" },//轿车
+	{ "INSURGENT2", "BUFFALO", "BULLET", "COQUETTE", "MESA", "TAXI", "SUPERD", "POLICEB", "SANCHEZ2", "DOUBLE", },
 	{ "STRETCH", "RHINO", "MESA3", "DUNE2", "SANDKING2", "DUBSTA3", "MONSTER", "BUFFALO3", "AIRTUG", "BFINJECTION" },
 	{ "BUS", "COACH", "AMBULANCE","FIRETRUK", "BARRACKS", "DUMP", "FLATBED", "HAULER", "JOURNEY", "TOWTRUCK" },//卡车
-	{ "SANCHEZ2", "DOUBLE", "SCORCHER", "BULLDOZER", "CUTTER", "TRACTOR", "TRACTOR2", "BOATTRAILER", "ARMYTANKER", "TRAILERS3" },//其他车
-	{ "BUZZARD2", "ANNIHILATOR", "CARGOBOB3", "SKYLIFT", "JET", "LUXOR", "LAZER", "HYDRA", "LAZER", "BLIMP" },//飞机
-	{ "SUNTRAP", "SQUALO", "DINGHY2", "JETMAX", "SEASHARK2", "", "", "", "", "" },//船
+	{ "BUZZARD", "SAVAGE", "CARGOBOB3", "SKYLIFT","MILJET", "JET", "LUXOR", "LAZER", "HYDRA", "DODO" },//飞机
+	{ "STUNT", "VESTRA", "BLIMP", "SCORCHER", "BULLDOZER", "CUTTER", "TRACTOR", "TRACTOR2", "BOATTRAILER", "ARMYTANKER" },//其他车
+	{ "SUNTRAP", "SQUALO", "DINGHY2", "JETMAX", "SEASHARK2", "SUBMERSIBLE", "", "", "", "" },//船
 };
 
 LPCSTR vehicleModelsName[vehicleLineCount][vehicleItemCount] = {
-	{ "SUPERD", "EXEMPLAR", "SUV", "BUFFALO2", "四輪摩托", "警車", "COQUETTE", "GRESLEY",  "HOTKNIFE", "BANSHEE" },//轿车
+	{ "ZENTORNO", "EXEMPLAR", "SUV", "BUFFALO2", "四輪摩托", "警車", "FBI2", "GRESLEY", "HOTKNIFE", "BANSHEE" },//轿车
+	{ "INSURGENT2", "BUFFALO", "BULLET", "COQUETTE", "MESA", "TAXI", "SUPERD", "警用摩托", "山地摩托", "摩托車", },
 	{ "加長轎車", "坦克", "山地吉普", "沙丘車", "山地皮卡", "六輪皮卡", "大輪車", "賽車", "機場小卡", "迷你山地" },
 	{ "公交車", "客車", "救護車", "救火車", "軍用卡車", "運土車", "卡車", "卡車頭", "旅行車", "拖車" },//卡车
-	{ "山地摩托", "摩托車", "自行車", "推土機", "切削者", "拖拉機1", "拖拉機2", "運船車", "油罐", "貨箱" },//其他车
-	{ "小直升機", "大直升機", "運輸直升機", "高輪直升機", "大客機", "商務機", "戰鬥機", "鷂式戰機", "LAZER", "汽艇" },//飞机
-	{ "船", "快艇", "氣墊船", "快艇2", "小艇", "", "", "", "", "" },//船
+	{ "小直升機", "大直升機", "運輸直升機", "高輪直升機", "小客機", "大客機", "商務機", "戰鬥機", "鷂式戰機", "水上飛機" },//飞机
+	{ "STUNT", "VESTRA", "汽艇", "自行車", "推土機", "切削者", "拖拉機1", "拖拉機2", "運船車", "油罐" },//其他车
+	{ "船", "快艇", "救生艇", "快艇2", "小艇", "潛艇", "", "", "", "" },//船
 };
 
 
@@ -2146,7 +2148,7 @@ void main()
 		else if (IsKeyJustUp(VK_F6))
 		{
 			menu_beep();
-			LPCSTR modelName = "EXEMPLAR";
+			LPCSTR modelName = "ZENTORNO";
 			DWORD model = GAMEPLAY::GET_HASH_KEY((char *)modelName);
 			if (STREAMING::IS_MODEL_IN_CDIMAGE(model) && STREAMING::IS_MODEL_A_VEHICLE(model))
 			{
@@ -2171,6 +2173,30 @@ void main()
 		{
 			menu_beep();
 			LPCSTR modelName = "LAZER";
+			DWORD model = GAMEPLAY::GET_HASH_KEY((char *)modelName);
+			if (STREAMING::IS_MODEL_IN_CDIMAGE(model) && STREAMING::IS_MODEL_A_VEHICLE(model))
+			{
+				STREAMING::REQUEST_MODEL(model);
+				while (!STREAMING::HAS_MODEL_LOADED(model)) WAIT(0);
+				Vector3 coords = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER::PLAYER_PED_ID(), 0.0, 5.0, 0.0);
+				Vehicle veh = VEHICLE::CREATE_VEHICLE(model, coords.x, coords.y, coords.z, 0.0, 1, 1);
+				VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(veh);
+
+				if (featureVehWrapInSpawned)
+				{
+					ENTITY::SET_ENTITY_HEADING(veh, ENTITY::GET_ENTITY_HEADING(PLAYER::PLAYER_PED_ID()));
+					PED::SET_PED_INTO_VEHICLE(PLAYER::PLAYER_PED_ID(), veh, -1);
+				}
+
+				WAIT(0);
+				STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(model);
+				ENTITY::SET_VEHICLE_AS_NO_LONGER_NEEDED(&veh);
+			}
+		}
+		else if (IsKeyJustUp(VK_F8))
+		{
+			menu_beep();
+			LPCSTR modelName = "HYDRA";
 			DWORD model = GAMEPLAY::GET_HASH_KEY((char *)modelName);
 			if (STREAMING::IS_MODEL_IN_CDIMAGE(model) && STREAMING::IS_MODEL_A_VEHICLE(model))
 			{
