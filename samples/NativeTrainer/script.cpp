@@ -12,7 +12,7 @@
 	O/U			NUM9/3 				use vehicle boost when active
 	8			NUM+ 				use vehicle rockets when active
 
-				F5					Teleport to marker
+				F3					Teleport to marker
 				F6					Get a car quickly
 				F7					Get LAZER quickly
 */
@@ -2080,7 +2080,7 @@ void main()
 			menu_beep();
 			process_main_menu();
 		}
-		else if (IsKeyJustUp(VK_F5)) //Teleport to marker
+		else if (IsKeyJustUp(VK_F3)) //Teleport to marker
 		{
 			menu_beep();
 
