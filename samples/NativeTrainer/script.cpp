@@ -15,6 +15,8 @@
 				F3					Teleport to marker
 				F6					Get a car quickly
 				F7					Get LAZER quickly
+				F8					Get HYDRA quickly
+				F10					Get last vehicle
 */
 
 #include "script.h"
@@ -25,6 +27,8 @@
 #include <comdef.h>
 
 #pragma warning(disable : 4244 4305) // double <-> float conversions
+
+LPCSTR lastVehicle = "";
 
 void draw_rect(float A_0, float A_1, float A_2, float A_3, int A_4, int A_5, int A_6, int A_7)
 {
@@ -541,6 +545,42 @@ void update_features()
 	// hide hud
 	if (featureMiscHideHud)
 		UI::HIDE_HUD_AND_RADAR_THIS_FRAME();
+}
+
+
+bool spawnVehicle(LPCSTR modelName)
+{
+	menu_beep();
+
+	DWORD model = GAMEPLAY::GET_HASH_KEY((char *)modelName);
+	if (STREAMING::IS_MODEL_IN_CDIMAGE(model) && STREAMING::IS_MODEL_A_VEHICLE(model))
+	{
+		STREAMING::REQUEST_MODEL(model);
+		while (!STREAMING::HAS_MODEL_LOADED(model)) WAIT(0);
+		Vector3 coords = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER::PLAYER_PED_ID(), 0.0, 5.0, 0.0);
+		Vehicle veh = VEHICLE::CREATE_VEHICLE(model, coords.x, coords.y, coords.z, 0.0, 1, 1);
+		VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(veh);
+
+		if (featureVehWrapInSpawned)
+		{
+			ENTITY::SET_ENTITY_HEADING(veh, ENTITY::GET_ENTITY_HEADING(PLAYER::PLAYER_PED_ID()));
+			PED::SET_PED_INTO_VEHICLE(PLAYER::PLAYER_PED_ID(), veh, -1);
+		}
+
+		WAIT(0);
+		STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(model);
+		ENTITY::SET_VEHICLE_AS_NO_LONGER_NEEDED(&veh);
+
+		char statusText[32];
+		sprintf_s(statusText, "%s spawned", modelName);
+		set_status_text(statusText);
+
+		lastVehicle = modelName;
+
+		return true;
+	}
+	else
+		return false;
 }
 
 LPCSTR pedModels[69][10] = {
@@ -1299,33 +1339,9 @@ bool process_carspawn_menu()
 
 		if (bSelect)
 		{
-			menu_beep();
 			LPCSTR modelName = vehicleModels[carspawnActiveLineIndex][carspawnActiveItemIndex];
-			DWORD model = GAMEPLAY::GET_HASH_KEY((char *)modelName);
-			if (STREAMING::IS_MODEL_IN_CDIMAGE(model) && STREAMING::IS_MODEL_A_VEHICLE(model))
-			{
-				STREAMING::REQUEST_MODEL(model);
-				while (!STREAMING::HAS_MODEL_LOADED(model)) WAIT(0);
-				Vector3 coords = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER::PLAYER_PED_ID(), 0.0, 5.0, 0.0);
-				Vehicle veh = VEHICLE::CREATE_VEHICLE(model, coords.x, coords.y, coords.z, 0.0, 1, 1);
-				VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(veh);
-
-				if (featureVehWrapInSpawned)
-				{
-					ENTITY::SET_ENTITY_HEADING(veh, ENTITY::GET_ENTITY_HEADING(PLAYER::PLAYER_PED_ID()));
-					PED::SET_PED_INTO_VEHICLE(PLAYER::PLAYER_PED_ID(), veh, -1);
-				}
-
-				WAIT(0);
-				STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(model);
-				ENTITY::SET_VEHICLE_AS_NO_LONGER_NEEDED(&veh);
-
-				char statusText[32];
-				sprintf_s(statusText, "%s spawned", modelName);
-				set_status_text(statusText);
-
+			if (spawnVehicle(modelName))
 				return true;
-			}
 		}
 		else
 			if (bBack)
@@ -1981,6 +1997,8 @@ void process_main_menu()
 				featureVehWrapInSpawned = true;
 				featureVehSpeedBoost = true;
 				featureVehSeatbelt = true; featureVehSeatbeltUpdated = true;
+				featureWeaponVehRockets = true;
+				featureVehInvincible = true; featureVehInvincibleUpdated = true;
 				break;
 			}
 			waitTime = 200;
@@ -2147,74 +2165,23 @@ void main()
 		}
 		else if (IsKeyJustUp(VK_F6))
 		{
-			menu_beep();
-			LPCSTR modelName = "ZENTORNO";
-			DWORD model = GAMEPLAY::GET_HASH_KEY((char *)modelName);
-			if (STREAMING::IS_MODEL_IN_CDIMAGE(model) && STREAMING::IS_MODEL_A_VEHICLE(model))
-			{
-				STREAMING::REQUEST_MODEL(model);
-				while (!STREAMING::HAS_MODEL_LOADED(model)) WAIT(0);
-				Vector3 coords = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER::PLAYER_PED_ID(), 0.0, 5.0, 0.0);
-				Vehicle veh = VEHICLE::CREATE_VEHICLE(model, coords.x, coords.y, coords.z, 0.0, 1, 1);
-				VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(veh);
-
-				if (featureVehWrapInSpawned)
-				{
-					ENTITY::SET_ENTITY_HEADING(veh, ENTITY::GET_ENTITY_HEADING(PLAYER::PLAYER_PED_ID()));
-					PED::SET_PED_INTO_VEHICLE(PLAYER::PLAYER_PED_ID(), veh, -1);
-				}
-
-				WAIT(0);
-				STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(model);
-				ENTITY::SET_VEHICLE_AS_NO_LONGER_NEEDED(&veh);
-			}
+			spawnVehicle("BANSHEE");
 		}
 		else if (IsKeyJustUp(VK_F7))
 		{
-			menu_beep();
-			LPCSTR modelName = "LAZER";
-			DWORD model = GAMEPLAY::GET_HASH_KEY((char *)modelName);
-			if (STREAMING::IS_MODEL_IN_CDIMAGE(model) && STREAMING::IS_MODEL_A_VEHICLE(model))
-			{
-				STREAMING::REQUEST_MODEL(model);
-				while (!STREAMING::HAS_MODEL_LOADED(model)) WAIT(0);
-				Vector3 coords = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER::PLAYER_PED_ID(), 0.0, 5.0, 0.0);
-				Vehicle veh = VEHICLE::CREATE_VEHICLE(model, coords.x, coords.y, coords.z, 0.0, 1, 1);
-				VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(veh);
-
-				if (featureVehWrapInSpawned)
-				{
-					ENTITY::SET_ENTITY_HEADING(veh, ENTITY::GET_ENTITY_HEADING(PLAYER::PLAYER_PED_ID()));
-					PED::SET_PED_INTO_VEHICLE(PLAYER::PLAYER_PED_ID(), veh, -1);
-				}
-
-				WAIT(0);
-				STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(model);
-				ENTITY::SET_VEHICLE_AS_NO_LONGER_NEEDED(&veh);
-			}
+			spawnVehicle("LAZER");
 		}
 		else if (IsKeyJustUp(VK_F8))
 		{
-			menu_beep();
-			LPCSTR modelName = "HYDRA";
-			DWORD model = GAMEPLAY::GET_HASH_KEY((char *)modelName);
-			if (STREAMING::IS_MODEL_IN_CDIMAGE(model) && STREAMING::IS_MODEL_A_VEHICLE(model))
+			spawnVehicle("HYDRA");
+		}
+		else if (IsKeyJustUp(VK_F10))
+		{
+			if (lastVehicle != "")
+				spawnVehicle(lastVehicle);
+			else
 			{
-				STREAMING::REQUEST_MODEL(model);
-				while (!STREAMING::HAS_MODEL_LOADED(model)) WAIT(0);
-				Vector3 coords = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(PLAYER::PLAYER_PED_ID(), 0.0, 5.0, 0.0);
-				Vehicle veh = VEHICLE::CREATE_VEHICLE(model, coords.x, coords.y, coords.z, 0.0, 1, 1);
-				VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY(veh);
-
-				if (featureVehWrapInSpawned)
-				{
-					ENTITY::SET_ENTITY_HEADING(veh, ENTITY::GET_ENTITY_HEADING(PLAYER::PLAYER_PED_ID()));
-					PED::SET_PED_INTO_VEHICLE(PLAYER::PLAYER_PED_ID(), veh, -1);
-				}
-
-				WAIT(0);
-				STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED(model);
-				ENTITY::SET_VEHICLE_AS_NO_LONGER_NEEDED(&veh);
+				set_status_text("No last vehicle");
 			}
 		}
 
