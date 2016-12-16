@@ -2,7 +2,7 @@
 
 Origin project  http://www.dev-c.com/gtav/scripthookv/
 
-## Useage
+## Usage
 
 Copy support files/dinput8.dll & ScriptHookV.dll and NativeTrainer.asi(built by vs) to game directory
 
