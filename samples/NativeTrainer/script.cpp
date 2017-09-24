@@ -1280,7 +1280,7 @@ void process_weapon_menu()
 
 const int vehicleLineCount = 7;
 const int vehicleItemCount = 10;
-const int vehicleLastLineCount = 6;
+const int vehicleLastLineCount = 8;
 
 LPCSTR vehicleModels[vehicleLineCount][vehicleItemCount] = {
 	{ "ZENTORNO", "EXEMPLAR", "FQ2", "BUFFALO2", "BLAZER3", "POLICE2", "FBI2", "GRESLEY", "HOTKNIFE", "BANSHEE" },//轿车
@@ -1289,7 +1289,7 @@ LPCSTR vehicleModels[vehicleLineCount][vehicleItemCount] = {
 	{ "BUS", "COACH", "AMBULANCE","FIRETRUK", "BARRACKS", "DUMP", "FLATBED", "HAULER", "JOURNEY", "TOWTRUCK" },//卡车
 	{ "BUZZARD", "SAVAGE", "CARGOBOB3", "SKYLIFT","MILJET", "JET", "LUXOR", "LAZER", "HYDRA", "DODO" },//飞机
 	{ "STUNT", "VESTRA", "BLIMP", "SCORCHER", "BULLDOZER", "CUTTER", "TRACTOR", "TRACTOR2", "BOATTRAILER", "ARMYTANKER" },//其他车
-	{ "SUNTRAP", "SQUALO", "DINGHY2", "JETMAX", "SEASHARK2", "SUBMERSIBLE", "", "", "", "" },//船
+	{ "SUNTRAP", "SQUALO", "DINGHY2", "JETMAX", "SEASHARK2", "SUBMERSIBLE", "RIPLEY", "ZTYPE", "", "" },//船
 };
 
 LPCSTR vehicleModelsName[vehicleLineCount][vehicleItemCount] = {
@@ -1299,7 +1299,7 @@ LPCSTR vehicleModelsName[vehicleLineCount][vehicleItemCount] = {
 	{ "公交車", "客車", "救護車", "救火車", "軍用卡車", "運土車", "卡車", "卡車頭", "旅行車", "拖車" },//卡车
 	{ "小直升機", "大直升機", "運輸直升機", "高輪直升機", "小客機", "大客機", "商務機", "戰鬥機", "鷂式戰機", "水上飛機" },//飞机
 	{ "STUNT", "VESTRA", "汽艇", "自行車", "推土機", "切削者", "拖拉機1", "拖拉機2", "運船車", "油罐" },//其他车
-	{ "船", "快艇", "救生艇", "快艇2", "小艇", "潛艇", "", "", "", "" },//船
+	{ "船", "快艇", "救生艇", "快艇2", "小艇", "潛艇", "RIPLEY", "ZTYPE", "", "" },//船
 };
 
 
